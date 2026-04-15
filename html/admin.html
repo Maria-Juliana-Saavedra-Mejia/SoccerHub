@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoccerHub | Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/common.css" />
+    <link rel="stylesheet" href="../styles/dashboard.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div class="header__brand">
+          <span class="header__logo">⚽</span>
+          <div>
+            <h1 class="header__title">SoccerHub Admin</h1>
+            <p class="header__tagline">Manage teams, players, and statistics</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-main">
+        <section class="panel top-actions">
+          <span class="badge">Admin Mode</span>
+          <button id="logoutButton" type="button" class="btn btn--ghost">Logout</button>
+        </section>
+
+        <p id="adminGlobalMessage" class="form__message admin-global-msg" role="status"></p>
+
+        <!-- Teams CRUD -->
+        <section class="panel">
+          <h2 class="panel__title">Teams</h2>
+          <p class="section-note">Create clubs with a logo image URL. Edit or delete as needed.</p>
+          <form id="teamForm" class="form__grid" novalidate>
+            <input type="hidden" id="teamEditId" value="" />
+            <label class="field">
+              <span class="field__label">Team name</span>
+              <input id="teamName" class="field__input" type="text" maxlength="80" />
+              <span id="teamErrorName" class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Logo URL</span>
+              <input id="teamLogoUrl" class="field__input" type="url" placeholder="https://…" />
+              <span id="teamErrorLogo" class="field__error"></span>
+            </label>
+            <div class="form__actions form__actions--full">
+              <button type="submit" class="btn btn--primary" id="teamSubmitBtn">Add team</button>
+              <button type="button" class="btn btn--ghost" id="teamCancelBtn" hidden>Cancel edit</button>
+            </div>
+          </form>
+          <div class="table-wrap admin-table-wrap">
+            <table class="table" id="teamsTable">
+              <thead>
+                <tr>
+                  <th>Logo</th>
+                  <th>Name</th>
+                  <th class="num">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="teamsTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Players CRUD -->
+        <section class="panel">
+          <h2 class="panel__title">Players</h2>
+          <p class="section-note">Assign each player to a team. Deleting a team removes its players.</p>
+          <form id="playerForm" class="form__grid" novalidate>
+            <input type="hidden" id="playerEditId" value="" />
+            <label class="field">
+              <span class="field__label">Team</span>
+              <select id="playerTeamSelect" class="field__input"></select>
+              <span id="playerErrorTeamId" class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Player name</span>
+              <input id="playerName" class="field__input" type="text" maxlength="80" />
+              <span id="playerErrorName" class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Position</span>
+              <input id="playerPosition" class="field__input" type="text" maxlength="40" placeholder="e.g. Forward" />
+              <span id="playerErrorPosition" class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Photo URL (optional)</span>
+              <input id="playerImageUrl" class="field__input" type="url" placeholder="https://… portrait image" />
+              <span id="playerErrorImageUrl" class="field__error"></span>
+            </label>
+            <div class="form__actions form__actions--full">
+              <button type="submit" class="btn btn--primary" id="playerSubmitBtn">Add player</button>
+              <button type="button" class="btn btn--ghost" id="playerCancelBtn" hidden>Cancel edit</button>
+            </div>
+          </form>
+          <div class="table-wrap admin-table-wrap">
+            <table class="table" id="playersTable">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Name</th>
+                  <th>Team</th>
+                  <th>Position</th>
+                  <th class="num">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="playersTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Stats CRUD -->
+        <section class="panel">
+          <h2 class="panel__title">Player statistics</h2>
+          <p class="section-note">Select a player to view or update their numbers.</p>
+          <form id="statsForm" class="form__grid" novalidate>
+            <label class="field">
+              <span class="field__label">Player</span>
+              <select id="statsPlayerSelect" class="field__input"></select>
+              <span id="statsErrorPlayer" class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Goals</span>
+              <input id="statsGoals" class="field__input" type="number" min="0" step="1" />
+              <span id="statsErrorGoals" class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Assists</span>
+              <input id="statsAssists" class="field__input" type="number" min="0" step="1" />
+              <span id="statsErrorAssists" class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Matches played</span>
+              <input id="statsMatches" class="field__input" type="number" min="0" step="1" />
+              <span id="statsErrorMatches" class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Shots (optional)</span>
+              <input id="statsShots" class="field__input" type="number" min="0" step="1" />
+              <span id="statsErrorShots" class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Yellow cards (optional)</span>
+              <input id="statsYellow" class="field__input" type="number" min="0" step="1" />
+              <span id="statsErrorYellow" class="field__error"></span>
+            </label>
+            <div class="form__actions form__actions--full">
+              <button type="submit" class="btn btn--primary" id="statsSaveBtn">Save statistics</button>
+              <button type="button" class="btn btn--danger" id="statsResetBtn">Reset form</button>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <script src="../scripts/core.js"></script>
+    <script src="../scripts/admin.js"></script>
+  </body>
+</html>

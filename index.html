@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoccerHub | Kickoff</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/common.css" />
+    <link rel="stylesheet" href="./styles/login.css" />
+  </head>
+  <body class="login-page">
+    <div class="page page--login">
+      <header class="header">
+        <div class="header__brand">
+          <span class="header__logo">⚽</span>
+          <div>
+            <h1 class="header__title">SoccerHub</h1>
+            <p class="header__tagline">Role-based football dashboard</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="layout login-layout">
+        <section class="login-hero login-hero--premium">
+          <p class="badge">Matchday Control Center</p>
+          <h2 class="login-hero__title">Play smarter, manage your squad better.</h2>
+          <p class="login-hero__text">
+            SoccerHub gives your team a modern command panel: admins manage the roster with full control, users can explore stats and search quickly.
+          </p>
+          <div class="feature-list">
+            <p>Live search across players and teams</p>
+            <p>Admin-only secure roster management</p>
+            <p>Fast local persistence with instant updates</p>
+          </div>
+        </section>
+
+        <section class="panel login-panel">
+          <h2 class="panel__title">Sign in to continue</h2>
+          <form id="loginForm" class="form form--inline" novalidate>
+            <label class="field">
+              <span class="field__label">Role</span>
+              <select id="roleSelect" class="field__input">
+                <option value="user">User (view/search)</option>
+                <option value="admin">Admin (CRUD)</option>
+              </select>
+              <p class="help-text">No password is required for User mode.</p>
+            </label>
+            <label class="field" id="adminPasswordField" hidden>
+              <span class="field__label">Admin Password</span>
+              <input
+                type="password"
+                id="adminPassword"
+                class="field__input"
+                placeholder="Enter admin password"
+                autocomplete="current-password"
+              />
+            </label>
+            <div class="form__actions">
+              <button type="submit" class="btn btn--primary btn--wide">Enter Dashboard</button>
+            </div>
+            <p id="loginMessage" class="form__message"></p>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <script src="./scripts/core.js"></script>
+    <script src="./scripts/login.js"></script>
+  </body>
+</html>
