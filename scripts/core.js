@@ -400,7 +400,7 @@ class AppDataRepository {
         teamId: liverpool,
         name: "Alisson",
         position: "Goalkeeper",
-        imageUrl: "",
+        imageUrl: "https://backend.liverpoolfc.com/sites/default/files/styles/xs/public/2025-08/alisson-becker-2526-action-shot_3b9d1ac89d40cf2fec8d178913e666f6.webp?itok=gNbPS0gy",
       },
       {
         id: SoccerHubUtils.newId(),
@@ -414,7 +414,7 @@ class AppDataRepository {
         teamId: liverpool,
         name: "Virgil van Dijk",
         position: "Center Back",
-        imageUrl: "",
+        imageUrl: "https://img.uefa.com/imgml/TP/players/1/2026/cutoff/50327420.webp",
       },
       {
         id: SoccerHubUtils.newId(),
@@ -428,35 +428,35 @@ class AppDataRepository {
         teamId: liverpool,
         name: "Dominik Szoboszlai",
         position: "Midfielder",
-        imageUrl: "",
+        imageUrl: "https://backend.liverpoolfc.com/sites/default/files/styles/xs/public/2025-08/dominik-szoboszlai-2526-action-shot_823b8a57728fadd08b6fefeeeffaf029.webp?itok=2wYv_ocB",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: liverpool,
         name: "Alexis Mac Allister",
         position: "Midfielder",
-        imageUrl: "",
+        imageUrl: "https://backend.liverpoolfc.com/sites/default/files/styles/xs/public/2025-08/alexis-mac-allister-2526-bodyshot_3dddf5e4052b2e68168b0f0effb18933.webp?itok=77ssU4H2",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: liverpool,
         name: "Mohamed Salah",
         position: "Forward",
-        imageUrl: "",
+        imageUrl: "https://backend.liverpoolfc.com/sites/default/files/styles/xs/public/2025-09/mohamed-salah-2025-26-body-shot-straight_1eed4e039fbd8ced5f98958fdf8b6235.png?itok=hWA7K4zm",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: liverpool,
         name: "Luis Díaz",
         position: "Forward",
-        imageUrl: "",
+        imageUrl: "https://static.wikia.nocookie.net/liverpoolfc/images/1/1d/LDiaz2024.png/revision/latest?cb=20240830094651",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: liverpool,
         name: "Darwin Núñez",
         position: "Striker",
-        imageUrl: "",
+        imageUrl: "https://static.wikia.nocookie.net/liverpoolfc/images/4/49/DNunez2024.png/revision/latest?cb=20240830094708",
       },
       {
         id: SoccerHubUtils.newId(),
@@ -470,7 +470,7 @@ class AppDataRepository {
         teamId: liverpool,
         name: "Cody Gakpo",
         position: "Forward",
-        imageUrl: "",
+        imageUrl: "https://backend.liverpoolfc.com/sites/default/files/styles/md/public/2025-08/cody-gakpo-2526-bodyshot_d2699f6ae8e453ab344175e42bc4e28a.png?itok=-AidnI6U",
       },
 
       // ================= PSG =================
