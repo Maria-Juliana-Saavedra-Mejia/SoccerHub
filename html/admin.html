@@ -26,15 +26,96 @@
       </header>
 
       <main class="dashboard-main">
-        <section class="panel top-actions">
-          <span class="badge">Admin Mode</span>
-          <button id="logoutButton" type="button" class="btn btn--ghost">Logout</button>
-        </section>
 
         <p id="adminGlobalMessage" class="form__message admin-global-msg" role="status"></p>
 
+        <section class="panel admin-quick-menu" aria-labelledby="quickMenuTitle">
+          <header class="quick-menu__intro">
+            <h2 id="quickMenuTitle" class="panel__title">Quick menu</h2>
+            <p class="quick-menu__lead">
+              Numbered shortcuts jump to each area below. Export or import a JSON backup of your league, or log out when
+              you are done.
+            </p>
+          </header>
+
+          <div class="quick-menu__groups">
+            <div class="quick-menu__group">
+              <h3 class="quick-menu__heading">Go to section</h3>
+              <ul class="quick-menu__list">
+                <li>
+                  <a class="quick-menu__tile" href="#section-teams">
+                    <span class="quick-menu__step" aria-hidden="true">1</span>
+                    <span class="quick-menu__tile-body">
+                      <span class="quick-menu__tile-title">Teams</span>
+                      <span class="quick-menu__tile-desc">Clubs, logos, add / edit / delete</span>
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a class="quick-menu__tile" href="#section-players">
+                    <span class="quick-menu__step" aria-hidden="true">2</span>
+                    <span class="quick-menu__tile-body">
+                      <span class="quick-menu__tile-title">Players</span>
+                      <span class="quick-menu__tile-desc">Squads, positions, optional photos</span>
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a class="quick-menu__tile" href="#section-stats">
+                    <span class="quick-menu__step" aria-hidden="true">3</span>
+                    <span class="quick-menu__tile-body">
+                      <span class="quick-menu__tile-title">Statistics</span>
+                      <span class="quick-menu__tile-desc">Goals, assists, matches, shots, cards</span>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="quick-menu__group">
+              <h3 class="quick-menu__heading">Data on your computer</h3>
+              <p class="quick-menu__hint">
+                Export downloads <code class="quick-menu__code">soccerhub-data.json</code>. Import replaces the current
+                league after checking the file format.
+              </p>
+              <ul class="quick-menu__list">
+                <li>
+                  <button type="button" class="quick-menu__tile quick-menu__tile--accent" id="exportDataBtn">
+                    <span class="quick-menu__step" aria-hidden="true">4</span>
+                    <span class="quick-menu__tile-body">
+                      <span class="quick-menu__tile-title">Export JSON</span>
+                      <span class="quick-menu__tile-desc">Save a full backup to your device</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <input type="file" id="importDataInput" accept=".json,application/json" hidden />
+                  <button type="button" class="quick-menu__tile quick-menu__tile--accent" id="importDataTrigger">
+                    <span class="quick-menu__step" aria-hidden="true">5</span>
+                    <span class="quick-menu__tile-body">
+                      <span class="quick-menu__tile-title">Import JSON</span>
+                      <span class="quick-menu__tile-desc">Restore from a file you saved before</span>
+                    </span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="quick-menu__group quick-menu__group--session">
+              <h3 class="quick-menu__heading">Session</h3>
+              <button type="button" class="quick-menu__tile quick-menu__tile--danger" id="quickMenuLogout">
+                <span class="quick-menu__step quick-menu__step--danger" aria-hidden="true">6</span>
+                <span class="quick-menu__tile-body">
+                  <span class="quick-menu__tile-title">Logout</span>
+                  <span class="quick-menu__tile-desc">Leave admin and return to the login page</span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </section>
+
         <!-- Teams CRUD -->
-        <section class="panel">
+        <section class="panel" id="section-teams">
           <h2 class="panel__title">Teams</h2>
           <p class="section-note">Create clubs with a logo image URL. Edit or delete as needed.</p>
           <form id="teamForm" class="form__grid" novalidate>
@@ -69,7 +150,7 @@
         </section>
 
         <!-- Players CRUD -->
-        <section class="panel">
+        <section class="panel" id="section-players">
           <h2 class="panel__title">Players</h2>
           <p class="section-note">Assign each player to a team. Deleting a team removes its players.</p>
           <form id="playerForm" class="form__grid" novalidate>
@@ -116,7 +197,7 @@
         </section>
 
         <!-- Stats CRUD -->
-        <section class="panel">
+        <section class="panel" id="section-stats">
           <h2 class="panel__title">Player statistics</h2>
           <p class="section-note">Select a player to view or update their numbers.</p>
           <form id="statsForm" class="form__grid" novalidate>
@@ -160,6 +241,7 @@
     </div>
 
     <script src="../scripts/core.js"></script>
+    <script src="../scripts/validators.js"></script>
     <script src="../scripts/admin.js"></script>
   </body>
 </html>

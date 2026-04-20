@@ -41,16 +41,19 @@
 
         <section class="panel login-panel">
           <h2 class="panel__title">Sign in to continue</h2>
-          <form id="loginForm" class="form form--inline" novalidate>
+          <form id="loginForm" class="form form--inline">
             <label class="field">
               <span class="field__label">Role</span>
               <select id="roleSelect" class="field__input">
                 <option value="user">User (view/search)</option>
                 <option value="admin">Admin (CRUD)</option>
               </select>
-              <p class="help-text">No password is required for User mode.</p>
+              <p id="roleHelpUser" class="help-text">No password is required for User mode.</p>
+              <p id="roleHelpAdmin" class="help-text" hidden>
+                Enter the admin password below to manage teams and players.
+              </p>
             </label>
-            <label class="field" id="adminPasswordField" hidden>
+            <label class="field" id="adminPasswordField" hidden aria-hidden="true">
               <span class="field__label">Admin Password</span>
               <input
                 type="password"

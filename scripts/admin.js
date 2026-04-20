@@ -414,10 +414,57 @@ statsPlayerSelect.addEventListener("change", () => {
   clearStatsErrors();
 });
 
-logoutButton.addEventListener("click", () => {
+function logoutToIndex() {
   adminAuthService.logout();
   window.location.href = "../index.html";
+}
+
+logoutButton.addEventListener("click", logoutToIndex);
+
+const exportDataBtn = document.getElementById("exportDataBtn");
+const importDataInput = document.getElementById("importDataInput");
+const importDataTrigger = document.getElementById("importDataTrigger");
+const quickMenuLogout = document.getElementById("quickMenuLogout");
+
+exportDataBtn.addEventListener("click", () => {
+  const json = JSON.stringify(adminLeague.data, null, 2);
+  const blob = new Blob([json], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "soccerhub-data.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showGlobal("Exported SoccerHub data to soccerhub-data.json.");
 });
+
+importDataTrigger.addEventListener("click", () => {
+  importDataInput.click();
+});
+
+importDataInput.addEventListener("change", async () => {
+  const file = importDataInput.files && importDataInput.files[0];
+  if (!file) return;
+  let parsed;
+  try {
+    parsed = JSON.parse(await file.text());
+  } catch {
+    showGlobal("Could not parse JSON file.", true);
+    importDataInput.value = "";
+    return;
+  }
+  const res = adminLeague.importAppData(parsed);
+  if (!res.ok) {
+    showGlobal(res.message || "Import failed.", true);
+    importDataInput.value = "";
+    return;
+  }
+  showGlobal("Data imported from file.");
+  importDataInput.value = "";
+  refreshAll();
+  loadStatsFormForPlayer(statsPlayerSelect.value);
+});
+
+quickMenuLogout.addEventListener("click", logoutToIndex);
 
 function init() {
   resetTeamForm();

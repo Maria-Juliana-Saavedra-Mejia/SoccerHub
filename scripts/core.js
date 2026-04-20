@@ -62,9 +62,24 @@ class AppDataRepository {
         name: "PSG",
         logoUrl: "https://crests.football-data.org/524.png",
       },
+      {
+        id: SoccerHubUtils.newId(),
+        name: "FC Bayern Munich",
+        logoUrl: "https://crests.football-data.org/5.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        name: "Arsenal FC",
+        logoUrl: "https://crests.football-data.org/57.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        name: "Atlético Madrid",
+        logoUrl: "https://crests.football-data.org/78.png",
+      },
     ];
 
-    const [madrid, barca, city, liverpool, psg] = teams.map((t) => t.id);
+    const [madrid, barca, city, liverpool, psg, bayern, arsenal, atletico] = teams.map((t) => t.id);
 
     const players = [
       // ================= REAL MADRID =================
@@ -302,6 +317,401 @@ class AppDataRepository {
         name: "Erling Haaland",
         position: "Striker",
         imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p223094.png",
+      },
+
+      // ================= LIVERPOOL =================
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: liverpool,
+        name: "Alisson",
+        position: "Goalkeeper",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p116535.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: liverpool,
+        name: "Trent Alexander-Arnold",
+        position: "Right Back",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p169187.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: liverpool,
+        name: "Virgil van Dijk",
+        position: "Center Back",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p97032.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: liverpool,
+        name: "Andrew Robertson",
+        position: "Left Back",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p234803.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: liverpool,
+        name: "Dominik Szoboszlai",
+        position: "Midfielder",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p447203.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: liverpool,
+        name: "Alexis Mac Allister",
+        position: "Midfielder",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p243568.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: liverpool,
+        name: "Mohamed Salah",
+        position: "Forward",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p118748.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: liverpool,
+        name: "Luis Díaz",
+        position: "Forward",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p244850.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: liverpool,
+        name: "Darwin Núñez",
+        position: "Striker",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p482442.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: liverpool,
+        name: "Diogo Jota",
+        position: "Forward",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p194634.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: liverpool,
+        name: "Cody Gakpo",
+        position: "Forward",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p369687.png",
+      },
+
+      // ================= PSG =================
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: psg,
+        name: "Gianluigi Donnarumma",
+        position: "Goalkeeper",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/315858.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: psg,
+        name: "Achraf Hakimi",
+        position: "Right Back",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/398073.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: psg,
+        name: "Marquinhos",
+        position: "Center Back",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/181767.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: psg,
+        name: "Lucas Hernández",
+        position: "Defender",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/201455.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: psg,
+        name: "Vitinha",
+        position: "Midfielder",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/487465.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: psg,
+        name: "Warren Zaïre-Emery",
+        position: "Midfielder",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/709036.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: psg,
+        name: "Ousmane Dembélé",
+        position: "Forward",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/288230.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: psg,
+        name: "Bradley Barcola",
+        position: "Forward",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/662281.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: psg,
+        name: "Randal Kolo Muani",
+        position: "Striker",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/333900.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: psg,
+        name: "Gonçalo Ramos",
+        position: "Striker",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/550516.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: psg,
+        name: "Marco Asensio",
+        position: "Forward",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/286413.jpg",
+      },
+
+      // ================= BAYERN MUNICH =================
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: bayern,
+        name: "Manuel Neuer",
+        position: "Goalkeeper",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/17259.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: bayern,
+        name: "Joshua Kimmich",
+        position: "Right Back",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/161933.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: bayern,
+        name: "Dayot Upamecano",
+        position: "Center Back",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/344695.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: bayern,
+        name: "Kim Min-jae",
+        position: "Center Back",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/351503.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: bayern,
+        name: "Alphonso Davies",
+        position: "Left Back",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/424204.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: bayern,
+        name: "Leon Goretzka",
+        position: "Midfielder",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/153065.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: bayern,
+        name: "Jamal Musiala",
+        position: "Midfielder",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/580014.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: bayern,
+        name: "Leroy Sané",
+        position: "Forward",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/192633.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: bayern,
+        name: "Serge Gnabry",
+        position: "Forward",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/90139.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: bayern,
+        name: "Harry Kane",
+        position: "Striker",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/132098.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: bayern,
+        name: "Thomas Müller",
+        position: "Forward",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/58333.jpg",
+      },
+
+      // ================= ARSENAL =================
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: arsenal,
+        name: "David Raya",
+        position: "Goalkeeper",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p98745.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: arsenal,
+        name: "Ben White",
+        position: "Right Back",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p198869.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: arsenal,
+        name: "William Saliba",
+        position: "Center Back",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p462424.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: arsenal,
+        name: "Gabriel Magalhães",
+        position: "Center Back",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p226597.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: arsenal,
+        name: "Declan Rice",
+        position: "Midfielder",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p204480.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: arsenal,
+        name: "Martin Ødegaard",
+        position: "Midfielder",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p184029.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: arsenal,
+        name: "Bukayo Saka",
+        position: "Forward",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p223340.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: arsenal,
+        name: "Gabriel Martinelli",
+        position: "Forward",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p444145.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: arsenal,
+        name: "Kai Havertz",
+        position: "Midfielder",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/309400.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: arsenal,
+        name: "Leandro Trossard",
+        position: "Forward",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p117116.png",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: arsenal,
+        name: "Gabriel Jesus",
+        position: "Striker",
+        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p205651.png",
+      },
+
+      // ================= ATLÉTICO MADRID =================
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: atletico,
+        name: "Jan Oblak",
+        position: "Goalkeeper",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/121483.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: atletico,
+        name: "Nahuel Molina",
+        position: "Right Back",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/593526.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: atletico,
+        name: "José Giménez",
+        position: "Center Back",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/284857.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: atletico,
+        name: "Reinildo",
+        position: "Left Back",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/341408.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: atletico,
+        name: "Koke",
+        position: "Midfielder",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/84423.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: atletico,
+        name: "Rodrigo De Paul",
+        position: "Midfielder",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/255253.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: atletico,
+        name: "Antoine Griezmann",
+        position: "Forward",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/125781.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: atletico,
+        name: "Álvaro Morata",
+        position: "Striker",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/128223.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: atletico,
+        name: "Samuel Lino",
+        position: "Forward",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/709051.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: atletico,
+        name: "Memphis Depay",
+        position: "Forward",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/167688.jpg",
+      },
+      {
+        id: SoccerHubUtils.newId(),
+        teamId: atletico,
+        name: "Axel Witsel",
+        position: "Midfielder",
+        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/50664.jpg",
       },
     ];
 
@@ -589,6 +999,26 @@ class LeagueService {
   reload() {
     this.data = this.repository.load();
   }
+
+  /**
+   * Replace app data from imported JSON (e.g. file). Validates top-level shape only.
+   * @param {unknown} data
+   * @returns {{ ok: boolean, message?: string }}
+   */
+  importAppData(data) {
+    if (!this.repository.isValidAppData(data)) {
+      return { ok: false, message: "Invalid SoccerHub data file." };
+    }
+    const d = /** @type {AppData} */ (data);
+    this.data = {
+      version: typeof d.version === "number" ? d.version : this.repository.config.dataVersion,
+      teams: d.teams,
+      players: d.players,
+      stats: d.stats,
+    };
+    this.persist();
+    return { ok: true };
+  }
 }
 
 class AuthService {
@@ -624,75 +1054,4 @@ class AuthService {
     }
     return true;
   }
-}
-
-function createTeamInputFromValues(values) {
-  const name = String(values.name || "").trim();
-  const logoUrl = String(values.logoUrl || "").trim();
-  const errors = {};
-  if (!name) errors.name = "Team name is required.";
-  if (!logoUrl) errors.logoUrl = "Logo URL is required.";
-  return {
-    valid: Object.keys(errors).length === 0,
-    data: { name, logoUrl },
-    errors,
-  };
-}
-
-function createPlayerInputFromValues(values) {
-  const teamId = String(values.teamId || "").trim();
-  const name = String(values.name || "").trim();
-  const position = String(values.position || "").trim();
-  const imageUrl = String(values.imageUrl || "").trim();
-  const errors = {};
-  if (!teamId) errors.teamId = "Select a team.";
-  if (!name) errors.name = "Player name is required.";
-  if (!position) errors.position = "Position is required.";
-  if (imageUrl && !/^https?:\/\//i.test(imageUrl)) {
-    errors.imageUrl = "Photo URL must start with http:// or https://";
-  }
-  const data = { teamId, name, position };
-  if (imageUrl) data.imageUrl = imageUrl;
-  return {
-    valid: Object.keys(errors).length === 0,
-    data,
-    errors,
-  };
-}
-
-function createStatsInputFromValues(values) {
-  const goals = Number(values.goals);
-  const assists = Number(values.assists);
-  const matchesPlayed = Number(values.matchesPlayed);
-  const shots = values.shots === "" || values.shots === undefined ? undefined : Number(values.shots);
-  const yellowCards =
-    values.yellowCards === "" || values.yellowCards === undefined ? undefined : Number(values.yellowCards);
-
-  const errors = {};
-  if (!Number.isInteger(goals) || goals < 0) errors.goals = "Goals must be a whole number >= 0.";
-  if (!Number.isInteger(assists) || assists < 0) errors.assists = "Assists must be a whole number >= 0.";
-  if (!Number.isInteger(matchesPlayed) || matchesPlayed < 0) {
-    errors.matchesPlayed = "Matches must be a whole number >= 0.";
-  }
-  if (shots !== undefined && (!Number.isInteger(shots) || shots < 0)) {
-    errors.shots = "Shots must be a whole number >= 0.";
-  }
-  if (yellowCards !== undefined && (!Number.isInteger(yellowCards) || yellowCards < 0)) {
-    errors.yellowCards = "Yellow cards must be a whole number >= 0.";
-  }
-  if (!errors.goals && !errors.matchesPlayed && goals > matchesPlayed) {
-    errors.goals = "Goals cannot exceed matches played.";
-  }
-
-  return {
-    valid: Object.keys(errors).length === 0,
-    data: {
-      goals,
-      assists,
-      matchesPlayed,
-      shots,
-      yellowCards,
-    },
-    errors,
-  };
 }

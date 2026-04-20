@@ -35,6 +35,10 @@
   gap: 1rem;
 }
 
+#adminPasswordField[hidden] {
+  display: none !important;
+}
+
 .login-hero {
   margin: 0;
   padding: 1rem 1.2rem;

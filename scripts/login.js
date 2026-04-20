@@ -2,6 +2,8 @@ const authService = new AuthService(SoccerHubConfig);
 
 const loginForm = document.getElementById("loginForm");
 const roleSelect = document.getElementById("roleSelect");
+const roleHelpUser = document.getElementById("roleHelpUser");
+const roleHelpAdmin = document.getElementById("roleHelpAdmin");
 const adminPasswordField = document.getElementById("adminPasswordField");
 const adminPassword = document.getElementById("adminPassword");
 const loginMessage = document.getElementById("loginMessage");
@@ -14,7 +16,15 @@ function showMessage(text, isError = false) {
 function togglePasswordVisibility() {
   const isAdminSelected = roleSelect.value === "admin";
   adminPasswordField.hidden = !isAdminSelected;
-  if (!isAdminSelected) adminPassword.value = "";
+  adminPasswordField.setAttribute("aria-hidden", isAdminSelected ? "false" : "true");
+  roleHelpUser.hidden = isAdminSelected;
+  roleHelpAdmin.hidden = !isAdminSelected;
+  adminPassword.required = isAdminSelected;
+  if (!isAdminSelected) {
+    adminPassword.value = "";
+  } else {
+    adminPassword.focus();
+  }
 }
 
 function redirectByRole(role) {

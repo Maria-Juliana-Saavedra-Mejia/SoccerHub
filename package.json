@@ -1,0 +1,8 @@
+{
+  "name": "soccerhub",
+  "private": true,
+  "description": "SoccerHub — frontend-only role-based football dashboard",
+  "scripts": {
+    "test": "node --test tests/*.mjs"
+  }
+}
