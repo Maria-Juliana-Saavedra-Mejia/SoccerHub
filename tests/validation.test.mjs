@@ -25,6 +25,29 @@ test("createTeamInputFromValues accepts valid team", () => {
   assert.equal(r.valid, true);
   assert.equal(r.data.name, "Test FC");
   assert.equal(r.data.logoUrl, "https://example.com/logo.png");
+  assert.equal(r.data.description, "");
+  assert.ok(Array.isArray(r.data.leaguesWon) && r.data.leaguesWon.length === 0);
+  assert.equal(r.data.creator, "");
+  assert.equal(r.data.currentLeague, "");
+});
+
+test("createTeamInputFromValues parses honors lines and optional fields", () => {
+  const r = createTeamInputFromValues({
+    name: "Test FC",
+    logoUrl: "https://example.com/logo.png",
+    description: "A test club.",
+    currentLeague: "Demo League",
+    creator: "Founder Name",
+    leaguesWon: "Cup A\nCup B",
+  });
+  assert.equal(r.valid, true);
+  assert.equal(r.data.description, "A test club.");
+  assert.ok(Array.isArray(r.data.leaguesWon));
+  assert.equal(r.data.leaguesWon.length, 2);
+  assert.equal(r.data.leaguesWon[0], "Cup A");
+  assert.equal(r.data.leaguesWon[1], "Cup B");
+  assert.equal(r.data.creator, "Founder Name");
+  assert.equal(r.data.currentLeague, "Demo League");
 });
 
 test("createPlayerInputFromValues rejects missing team", () => {

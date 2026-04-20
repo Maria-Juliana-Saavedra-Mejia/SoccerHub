@@ -5,12 +5,26 @@
 function createTeamInputFromValues(values) {
   const name = String(values.name || "").trim();
   const logoUrl = String(values.logoUrl || "").trim();
+  const description = String(values.description || "").trim();
+  const creator = String(values.creator || "").trim();
+  const currentLeague = String(values.currentLeague || "").trim();
+  const leaguesWonRaw = String(values.leaguesWon || "").trim();
+  const leaguesWon = leaguesWonRaw
+    ? leaguesWonRaw
+        .split(/\r?\n/)
+        .map((s) => s.trim())
+        .filter(Boolean)
+    : [];
   const errors = {};
   if (!name) errors.name = "Team name is required.";
   if (!logoUrl) errors.logoUrl = "Logo URL is required.";
+  if (description.length > 2000) errors.description = "Description must be at most 2000 characters.";
+  if (creator.length > 200) errors.creator = "Creator must be at most 200 characters.";
+  if (currentLeague.length > 120) errors.currentLeague = "Current league must be at most 120 characters.";
+  const data = { name, logoUrl, description, creator, currentLeague, leaguesWon };
   return {
     valid: Object.keys(errors).length === 0,
-    data: { name, logoUrl },
+    data,
     errors,
   };
 }

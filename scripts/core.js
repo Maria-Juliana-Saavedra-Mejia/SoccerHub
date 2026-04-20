@@ -23,11 +23,103 @@ class SoccerHubUtils {
 }
 
 /**
- * @typedef {{ id: string, name: string, logoUrl: string }} Team
+ * Seed / backfill: extended club fields for the eight default clubs (keyed by exact `name`).
+ * @type {Record<string, { description: string, leaguesWon: string[], creator: string, currentLeague: string }>}
+ */
+const DEFAULT_CLUB_METADATA_BY_NAME = {
+  "Real Madrid": {
+    description:
+      "Record European champions based at the Santiago Bernabéu. Known for galácticos-era flair and a relentless winning culture in Spain and abroad.",
+    leaguesWon: ["La Liga", "UEFA Champions League", "Copa del Rey", "FIFA Club World Cup"],
+    creator: "Juan Padrós, Julián Palacios (founded 1902)",
+    currentLeague: "La Liga",
+  },
+  "FC Barcelona": {
+    description:
+      "Catalan giants famous for La Masia youth production and possession football. Home matches at the renovated Estadi Olímpic while Camp Nou is redeveloped.",
+    leaguesWon: ["La Liga", "UEFA Champions League", "Copa del Rey", "UEFA Cup Winners' Cup"],
+    creator: "Joan Gamper (founded 1899)",
+    currentLeague: "La Liga",
+  },
+  "Manchester City": {
+    description:
+      "Etihad Stadium club that rose to dominate English football with progressive coaching and deep squad depth under modern ownership.",
+    leaguesWon: ["Premier League", "FA Cup", "EFL Cup", "UEFA Champions League"],
+    creator: "Anna Connell, William Beastow (founded 1880 as St. Mark's)",
+    currentLeague: "Premier League",
+  },
+  Liverpool: {
+    description:
+      "Anfield institution built on high pressing and European nights. One of England's most decorated clubs with a global supporter base.",
+    leaguesWon: ["First Division / Premier League", "UEFA Champions League", "FA Cup", "EFL Cup"],
+    creator: "John Houlding (founded 1892)",
+    currentLeague: "Premier League",
+  },
+  PSG: {
+    description:
+      "Paris flagship club combining Ligue 1 dominance with marquee signings. Plays at the Parc des Princes in the French capital.",
+    leaguesWon: ["Ligue 1", "Coupe de France", "Coupe de la Ligue", "UEFA Cup Winners' Cup"],
+    creator: "Guy Crescent, Pierre-Étienne Guyot, Henri Heillmann (founded 1970)",
+    currentLeague: "Ligue 1",
+  },
+  "FC Bayern Munich": {
+    description:
+      "German record champions with a tradition of ruthless efficiency in the Bundesliga and regular deep runs in European competition.",
+    leaguesWon: ["Bundesliga", "DFB-Pokal", "UEFA Champions League", "UEFA Cup / Europa League"],
+    creator: "Franz John and founding members (founded 1900)",
+    currentLeague: "Bundesliga",
+  },
+  "Arsenal FC": {
+    description:
+      "North London club known for stylistic football and long unbeaten league runs. Emirates Stadium has been home since 2006.",
+    leaguesWon: ["First Division / Premier League", "FA Cup", "League Cup", "UEFA Cup Winners' Cup"],
+    creator: "Workers at Woolwich Arsenal Armament Factory (founded 1886)",
+    currentLeague: "Premier League",
+  },
+  "Atlético Madrid": {
+    description:
+      "Madrid club built on defensive discipline and intensity under the Calderón and now the Metropolitano. Frequent title challengers in Spain.",
+    leaguesWon: ["La Liga", "Copa del Rey", "UEFA Europa League", "UEFA Super Cup"],
+    creator: "Students from Bilbao (founded 1903)",
+    currentLeague: "La Liga",
+  },
+};
+
+/**
+ * @typedef {{ id: string, name: string, logoUrl: string, description?: string, leaguesWon?: string[], creator?: string, currentLeague?: string }} Team
  * @typedef {{ id: string, teamId: string, name: string, position: string, imageUrl?: string }} Player
  * @typedef {{ playerId: string, goals: number, assists: number, matchesPlayed: number, shots?: number, yellowCards?: number }} PlayerStats
  * @typedef {{ version: number, teams: Team[], players: Player[], stats: PlayerStats[] }} AppData
  */
+
+/**
+ * Fills empty description / honors / creator / league from {@link DEFAULT_CLUB_METADATA_BY_NAME} when the team name matches.
+ * @param {Team} team
+ * @returns {{ team: Team, changed: boolean }}
+ */
+function mergeKnownClubMetadata(team) {
+  const seed = DEFAULT_CLUB_METADATA_BY_NAME[team.name];
+  if (!seed) return { team, changed: false };
+  let changed = false;
+  const out = { ...team };
+  if (!String(out.description || "").trim()) {
+    out.description = seed.description;
+    changed = true;
+  }
+  if (!out.leaguesWon || out.leaguesWon.length === 0) {
+    out.leaguesWon = [...seed.leaguesWon];
+    changed = true;
+  }
+  if (!String(out.creator || "").trim()) {
+    out.creator = seed.creator;
+    changed = true;
+  }
+  if (!String(out.currentLeague || "").trim()) {
+    out.currentLeague = seed.currentLeague;
+    changed = true;
+  }
+  return { team: out, changed };
+}
 
 class AppDataRepository {
   constructor(config) {
@@ -36,48 +128,31 @@ class AppDataRepository {
 
   /** @returns {AppData} */
   getDefaultData() {
-    const teams = [
-      {
-        id: SoccerHubUtils.newId(),
-        name: "Real Madrid",
-        logoUrl: "https://crests.football-data.org/86.png",
-      },
-      {
-        id: SoccerHubUtils.newId(),
-        name: "FC Barcelona",
-        logoUrl: "https://crests.football-data.org/81.png",
-      },
-      {
-        id: SoccerHubUtils.newId(),
-        name: "Manchester City",
-        logoUrl: "https://crests.football-data.org/65.png",
-      },
-      {
-        id: SoccerHubUtils.newId(),
-        name: "Liverpool",
-        logoUrl: "https://crests.football-data.org/64.png",
-      },
-      {
-        id: SoccerHubUtils.newId(),
-        name: "PSG",
-        logoUrl: "https://crests.football-data.org/524.png",
-      },
-      {
-        id: SoccerHubUtils.newId(),
-        name: "FC Bayern Munich",
-        logoUrl: "https://crests.football-data.org/5.png",
-      },
-      {
-        id: SoccerHubUtils.newId(),
-        name: "Arsenal FC",
-        logoUrl: "https://crests.football-data.org/57.png",
-      },
-      {
-        id: SoccerHubUtils.newId(),
-        name: "Atlético Madrid",
-        logoUrl: "https://crests.football-data.org/78.png",
-      },
+    const seedTeamBases = [
+      { name: "Real Madrid", logoUrl: "https://crests.football-data.org/86.png" },
+      { name: "FC Barcelona", logoUrl: "https://crests.football-data.org/81.png" },
+      { name: "Manchester City", logoUrl: "https://crests.football-data.org/65.png" },
+      { name: "Liverpool", logoUrl: "https://crests.football-data.org/64.png" },
+      { name: "PSG", logoUrl: "https://crests.football-data.org/524.png" },
+      { name: "FC Bayern Munich", logoUrl: "https://crests.football-data.org/5.png" },
+      { name: "Arsenal FC", logoUrl: "https://crests.football-data.org/57.png" },
+      { name: "Atlético Madrid", logoUrl: "https://crests.football-data.org/78.png" },
     ];
+    const teams = seedTeamBases.map((base) => {
+      const meta = DEFAULT_CLUB_METADATA_BY_NAME[base.name];
+      if (!meta) {
+        throw new Error("Missing DEFAULT_CLUB_METADATA_BY_NAME for " + base.name);
+      }
+      return {
+        id: SoccerHubUtils.newId(),
+        name: base.name,
+        logoUrl: base.logoUrl,
+        description: meta.description,
+        leaguesWon: [...meta.leaguesWon],
+        creator: meta.creator,
+        currentLeague: meta.currentLeague,
+      };
+    });
 
     const [madrid, barca, city, liverpool, psg, bayern, arsenal, atletico] = teams.map((t) => t.id);
 
@@ -88,77 +163,77 @@ class AppDataRepository {
         teamId: madrid,
         name: "Thibaut Courtois",
         position: "Goalkeeper",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/108390.jpg",
+        imageUrl: "https://assets.realmadrid.com/is/image/realmadrid/COURTOIS_550x650_SinParche?$Desktop$&fit=wrap&wid=420",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: madrid,
         name: "Dani Carvajal",
         position: "Right Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/138927.jpg",
+        imageUrl: "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/sports/football/3kq9cckrnlogidldtdie2fkbl/players/daniel-carvajal-ramos/assets/CARVAJAL_EQUIPO_CARITA_380x501_SinParche.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: madrid,
         name: "Antonio Rüdiger",
         position: "Center Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/86202.jpg",
+        imageUrl: "https://assets.realmadrid.com/is/image/realmadrid/RUDIGER_550x650_SinParche?$Mobile$&fit=wrap&wid=420",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: madrid,
         name: "David Alaba",
         position: "Center Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/59016.jpg",
+        imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO60l9Ep7vm1REb42OW3xJr8eU9kHjfLReBg&s",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: madrid,
         name: "Ferland Mendy",
         position: "Left Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/291417.jpg",
+        imageUrl: "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/sports/football/3kq9cckrnlogidldtdie2fkbl/players/ferland-mendy/assets/MENDY_550x650_SinParche.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: madrid,
         name: "Aurélien Tchouaméni",
         position: "Midfielder",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/413112.jpg",
+        imageUrl: "https://assets.realmadrid.com/is/image/realmadrid/TCHOUAMENI_550x650_SinParche?$Desktop$&fit=wrap&wid=420",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: madrid,
         name: "Toni Kroos",
         position: "Midfielder",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/31909.jpg",
+        imageUrl: "https://assets.realmadrid.com/is/image/realmadrid/KROOS2_HP_PNG?$Mobile$&fit=wrap&wid=312",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: madrid,
         name: "Jude Bellingham",
         position: "Midfielder",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/581678.jpg",
+        imageUrl: "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/sports/football/3kq9cckrnlogidldtdie2fkbl/players/jude-bellingham/assets/BELLINGHAM_EQUIPO_CARITA_380x501_SinParche.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: madrid,
         name: "Rodrygo",
         position: "Forward",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/412363.jpg",
+        imageUrl: "https://assets.realmadrid.com/is/image/realmadrid/RODRYGO_550x650_SinParche?$Mobile$&fit=wrap&wid=420",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: madrid,
         name: "Vinícius Jr",
         position: "Forward",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/371998.jpg",
+        imageUrl: "https://publish.realmadrid.com/content/dam/portals/realmadrid-com/es-es/sports/football/3kq9cckrnlogidldtdie2fkbl/players/vinicius-paixao-de-oliveira-junior-/assets/VINICIUS_550x650_SinParche.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: madrid,
         name: "Joselu",
         position: "Striker",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/81999.jpg",
+        imageUrl: "https://assets.realmadrid.com/is/image/realmadrid/550x650_JOSELU_15?$Mobile$&fit=wrap&wid=420",
       },
 
       // ================= BARCELONA =================
@@ -167,77 +242,77 @@ class AppDataRepository {
         teamId: barca,
         name: "Marc-André ter Stegen",
         position: "Goalkeeper",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/74857.jpg",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Jules Koundé",
         position: "Defender",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/342229.jpg",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Ronald Araújo",
         position: "Defender",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/480692.jpg",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Alejandro Balde",
         position: "Left Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/625207.jpg",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Frenkie de Jong",
         position: "Midfielder",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/326330.jpg",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Pedri",
         position: "Midfielder",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/683840.jpg",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Gavi",
         position: "Midfielder",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/646740.jpg",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Raphinha",
         position: "Forward",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/411295.jpg",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Robert Lewandowski",
         position: "Striker",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/38253.jpg",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "João Félix",
         position: "Forward",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/462250.jpg",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Lamine Yamal",
         position: "Forward",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/937958.jpg",
+        imageUrl: "",
       },
 
       // ================= MAN CITY =================
@@ -260,7 +335,7 @@ class AppDataRepository {
         teamId: city,
         name: "Rúben Dias",
         position: "Defender",
-        imageUrl: "https://resources.premierleague.com/premierleague/photos/players/250x250/p244731.png",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
@@ -274,7 +349,7 @@ class AppDataRepository {
         teamId: city,
         name: "Joško Gvardiol",
         position: "Defender",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/475959.jpg",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
@@ -752,10 +827,27 @@ class AppDataRepository {
     const name = String(o.name || "").trim();
     const logoUrl = String(o.logoUrl || "").trim();
     if (!name) return null;
+    const description = String(o.description || "").trim();
+    const creator = String(o.creator || "").trim();
+    const currentLeague = String(o.currentLeague || "").trim();
+    /** @type {string[]} */
+    let leaguesWon = [];
+    if (Array.isArray(o.leaguesWon)) {
+      leaguesWon = o.leaguesWon.map((x) => String(x).trim()).filter(Boolean);
+    } else if (typeof o.leaguesWon === "string" && o.leaguesWon.trim()) {
+      leaguesWon = o.leaguesWon
+        .split(/[,\n]/)
+        .map((s) => s.trim())
+        .filter(Boolean);
+    }
     return {
       id,
       name,
       logoUrl: logoUrl || "https://placehold.co/120x120/1a222c/34d27b?text=Team",
+      description,
+      leaguesWon,
+      creator,
+      currentLeague,
     };
   }
 
@@ -861,15 +953,23 @@ class AppDataRepository {
         return migrated;
       }
       const d = /** @type {AppData} */ (parsed);
-      const teams = d.teams.map((t) => this.normalizeTeam(t)).filter(Boolean);
+      const normalizedTeams = d.teams.map((t) => this.normalizeTeam(t)).filter(Boolean);
+      let teamsMerged = false;
+      const teams = normalizedTeams.map((t) => {
+        const { team: merged, changed } = mergeKnownClubMetadata(/** @type {Team} */ (t));
+        if (changed) teamsMerged = true;
+        return merged;
+      });
       const players = d.players.map((p) => this.normalizePlayer(p)).filter(Boolean);
       const stats = d.stats.map((s) => this.normalizeStats(s)).filter(Boolean);
-      return {
+      const result = {
         version: this.config.dataVersion,
         teams: /** @type {Team[]} */ (teams),
         players: /** @type {Player[]} */ (players),
         stats: /** @type {PlayerStats[]} */ (stats),
       };
+      if (teamsMerged) this.save(result);
+      return result;
     } catch {
       const fresh = this.getDefaultData();
       this.save(fresh);
@@ -976,6 +1076,26 @@ class LeagueService {
     return this.data.stats.find((s) => s.playerId === playerId) || null;
   }
 
+  /**
+   * Sum goals, assists, and yellow cards for all players on a team.
+   * @param {string} teamId
+   * @returns {{ goals: number, assists: number, yellowCards: number }}
+   */
+  getTeamStatTotals(teamId) {
+    let goals = 0;
+    let assists = 0;
+    let yellowCards = 0;
+    for (const p of this.getPlayers(teamId)) {
+      const s = this.getStats(p.id);
+      if (s) {
+        goals += s.goals;
+        assists += s.assists;
+        yellowCards += s.yellowCards !== undefined ? s.yellowCards : 0;
+      }
+    }
+    return { goals, assists, yellowCards };
+  }
+
   upsertStats(playerId, patch) {
     let s = this.data.stats.find((x) => x.playerId === playerId);
     if (!s) {
@@ -1010,9 +1130,12 @@ class LeagueService {
       return { ok: false, message: "Invalid SoccerHub data file." };
     }
     const d = /** @type {AppData} */ (data);
+    const teams = d.teams
+      .map((t) => this.repository.normalizeTeam(t))
+      .filter(Boolean);
     this.data = {
       version: typeof d.version === "number" ? d.version : this.repository.config.dataVersion,
-      teams: d.teams,
+      teams: /** @type {Team[]} */ (teams),
       players: d.players,
       stats: d.stats,
     };

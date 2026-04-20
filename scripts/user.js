@@ -17,6 +17,8 @@ const playersPanelTitle = document.getElementById("playersPanelTitle");
 const playerSearchInput = document.getElementById("playerSearchInput");
 const playersList = document.getElementById("playersList");
 const playersEmpty = document.getElementById("playersEmpty");
+const teamClubProfile = document.getElementById("teamClubProfile");
+const teamSquadStats = document.getElementById("teamSquadStats");
 const statsModal = document.getElementById("statsModal");
 const statsModalTitle = document.getElementById("statsModalTitle");
 const statsModalBody = document.getElementById("statsModalBody");
@@ -29,6 +31,41 @@ function escapeHtml(text) {
   const div = document.createElement("div");
   div.textContent = text;
   return div.innerHTML;
+}
+
+/** @param {{ description?: string, currentLeague?: string, creator?: string, leaguesWon?: string[] } | null} team */
+function clubProfileHtml(team) {
+  if (!team) return "";
+  const desc = String(team.description || "").trim();
+  const current = String(team.currentLeague || "").trim();
+  const creator = String(team.creator || "").trim();
+  const leagues = Array.isArray(team.leaguesWon) ? team.leaguesWon.filter(Boolean) : [];
+  const honorsBlock =
+    leagues.length > 0
+      ? '<ul class="club-profile__honors">' +
+        leagues.map((x) => "<li>" + escapeHtml(String(x)) + "</li>").join("") +
+        "</ul>"
+      : '<p class="club-profile__muted">—</p>';
+  const facts =
+    '<dl class="club-profile__facts">' +
+    "<div><dt>Current league</dt><dd>" +
+    (current ? escapeHtml(current) : '<span class="club-profile__muted">—</span>') +
+    "</dd></div>" +
+    "<div><dt>Leagues / honors won</dt><dd>" +
+    honorsBlock +
+    "</dd></div>" +
+    "<div><dt>Creator / founded</dt><dd>" +
+    (creator ? escapeHtml(creator) : '<span class="club-profile__muted">—</span>') +
+    "</dd></div>" +
+    "</dl>";
+  return (
+    '<div class="club-profile__card">' +
+    (desc
+      ? '<p class="club-profile__description">' + escapeHtml(desc) + "</p>"
+      : '<p class="club-profile__description club-profile__description--empty">No description yet.</p>') +
+    facts +
+    "</div>"
+  );
 }
 
 function renderBreadcrumb() {
@@ -93,9 +130,25 @@ function renderPlayers() {
   if (!selectedTeamId) return;
   const team = userLeague.getTeam(selectedTeamId);
   playersPanelTitle.textContent = team ? team.name + " — Squad" : "Squad";
+  if (team && teamClubProfile) {
+    teamClubProfile.hidden = false;
+    teamClubProfile.innerHTML = clubProfileHtml(team);
+  } else if (teamClubProfile) {
+    teamClubProfile.hidden = true;
+    teamClubProfile.innerHTML = "";
+  }
+  if (team && teamSquadStats) {
+    const totals = userLeague.getTeamStatTotals(selectedTeamId);
+    teamSquadStats.hidden = false;
+    teamSquadStats.innerHTML = teamSquadSummaryHtml(team.name, team.logoUrl, totals);
+  }
   const players = filteredPlayersForTeam(selectedTeamId);
   playersList.replaceChildren();
   players.forEach((p) => {
+    const s = userLeague.getStats(p.id);
+    const g = s ? s.goals : 0;
+    const a = s ? s.assists : 0;
+    const y = s && s.yellowCards !== undefined ? s.yellowCards : 0;
     const row = document.createElement("button");
     row.type = "button";
     row.className = "player-row";
@@ -113,7 +166,9 @@ function renderPlayers() {
       escapeHtml(p.name) +
       '</span><span class="player-row__pos">' +
       escapeHtml(p.position) +
-      "</span></span>" +
+      "</span>" +
+      playerStatPillsHtml(g, a, y) +
+      "</span>" +
       '<span class="player-row__hint">View stats →</span>';
     playersList.appendChild(row);
   });
@@ -124,6 +179,14 @@ function showTeamsView() {
   selectedTeamId = null;
   playerSearch = "";
   playerSearchInput.value = "";
+  if (teamClubProfile) {
+    teamClubProfile.innerHTML = "";
+    teamClubProfile.hidden = true;
+  }
+  if (teamSquadStats) {
+    teamSquadStats.innerHTML = "";
+    teamSquadStats.hidden = true;
+  }
   teamsView.classList.remove("is-hidden");
   playersView.classList.add("is-hidden");
   renderBreadcrumb();
@@ -149,6 +212,9 @@ function openStatsModal(playerId) {
     shots: 0,
     yellowCards: 0,
   };
+  const g = st.goals;
+  const a = st.assists;
+  const y = st.yellowCards !== undefined ? st.yellowCards : 0;
   statsModalTitle.textContent = player.name;
   const portrait =
     player.imageUrl && String(player.imageUrl).trim()
@@ -163,6 +229,9 @@ function openStatsModal(playerId) {
     " · " +
     escapeHtml(player.position) +
     "</p>" +
+    '<div class="modal__stat-viz-wrap">' +
+    statTripleBarsNormalized(g, a, y) +
+    "</div>" +
     '<dl class="stats-dl">' +
     "<div><dt>Goals</dt><dd>" +
     st.goals +

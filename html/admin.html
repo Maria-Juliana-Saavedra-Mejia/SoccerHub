@@ -17,7 +17,16 @@
     <div class="page">
       <header class="header">
         <div class="header__brand">
-          <span class="header__logo">⚽</span>
+          <div class="header__logo-wrap" aria-hidden="true">
+            <img
+              class="header__logo-img"
+              src="../assets/soccerhub-logo.png"
+              alt=""
+              width="120"
+              height="120"
+              loading="lazy"
+            />
+          </div>
           <div>
             <h1 class="header__title">SoccerHub Admin</h1>
             <p class="header__tagline">Manage teams, players, and statistics</p>
@@ -26,6 +35,10 @@
       </header>
 
       <main class="dashboard-main">
+        <section class="panel top-actions">
+          <span class="badge">Admin Mode</span>
+          <button id="logoutButton" type="button" class="btn btn--ghost">Logout</button>
+        </section>
 
         <p id="adminGlobalMessage" class="form__message admin-global-msg" role="status"></p>
 
@@ -117,7 +130,10 @@
         <!-- Teams CRUD -->
         <section class="panel" id="section-teams">
           <h2 class="panel__title">Teams</h2>
-          <p class="section-note">Create clubs with a logo image URL. Edit or delete as needed.</p>
+          <p class="section-note">
+            Create clubs with a logo URL. Optional fields: description, current league, honors (one per line), and creator /
+            founded. Edit or delete as needed.
+          </p>
           <form id="teamForm" class="form__grid" novalidate>
             <input type="hidden" id="teamEditId" value="" />
             <label class="field">
@@ -130,6 +146,25 @@
               <input id="teamLogoUrl" class="field__input" type="url" placeholder="https://…" />
               <span id="teamErrorLogo" class="field__error"></span>
             </label>
+            <label class="field field--full">
+              <span class="field__label">Club description</span>
+              <textarea id="teamDescription" class="field__input" rows="3" maxlength="2000" placeholder="Short history and identity…"></textarea>
+              <span id="teamErrorDescription" class="field__error"></span>
+            </label>
+            <label class="field">
+              <span class="field__label">Current league</span>
+              <input id="teamCurrentLeague" class="field__input" type="text" maxlength="120" placeholder="e.g. Premier League" />
+              <span id="teamErrorCurrentLeague" class="field__error"></span>
+            </label>
+            <label class="field field--full">
+              <span class="field__label">Leagues / honors won (one per line)</span>
+              <textarea id="teamLeaguesWon" class="field__input" rows="4" placeholder="La Liga&#10;UEFA Champions League"></textarea>
+            </label>
+            <label class="field field--full">
+              <span class="field__label">Creator / founded</span>
+              <input id="teamCreator" class="field__input" type="text" maxlength="200" placeholder="Founders or founding year" />
+              <span id="teamErrorCreator" class="field__error"></span>
+            </label>
             <div class="form__actions form__actions--full">
               <button type="submit" class="btn btn--primary" id="teamSubmitBtn">Add team</button>
               <button type="button" class="btn btn--ghost" id="teamCancelBtn" hidden>Cancel edit</button>
@@ -141,6 +176,7 @@
                 <tr>
                   <th>Logo</th>
                   <th>Name</th>
+                  <th class="col-stat-viz">Squad totals (G · A · Y)</th>
                   <th class="num">Actions</th>
                 </tr>
               </thead>
@@ -188,6 +224,7 @@
                   <th>Name</th>
                   <th>Team</th>
                   <th>Position</th>
+                  <th class="col-stat-viz">Stats (G · A · Y)</th>
                   <th class="num">Actions</th>
                 </tr>
               </thead>
@@ -241,6 +278,7 @@
     </div>
 
     <script src="../scripts/core.js"></script>
+    <script src="../scripts/stats-viz.js"></script>
     <script src="../scripts/validators.js"></script>
     <script src="../scripts/admin.js"></script>
   </body>

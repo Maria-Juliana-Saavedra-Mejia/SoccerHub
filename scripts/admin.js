@@ -16,6 +16,13 @@ const teamSubmitBtn = document.getElementById("teamSubmitBtn");
 const teamCancelBtn = document.getElementById("teamCancelBtn");
 const teamErrorName = document.getElementById("teamErrorName");
 const teamErrorLogo = document.getElementById("teamErrorLogo");
+const teamDescription = document.getElementById("teamDescription");
+const teamCurrentLeague = document.getElementById("teamCurrentLeague");
+const teamLeaguesWon = document.getElementById("teamLeaguesWon");
+const teamCreator = document.getElementById("teamCreator");
+const teamErrorDescription = document.getElementById("teamErrorDescription");
+const teamErrorCreator = document.getElementById("teamErrorCreator");
+const teamErrorCurrentLeague = document.getElementById("teamErrorCurrentLeague");
 const teamsTableBody = document.getElementById("teamsTableBody");
 
 const playerForm = document.getElementById("playerForm");
@@ -60,6 +67,9 @@ function escapeHtml(text) {
 function clearTeamErrors() {
   teamErrorName.textContent = "";
   teamErrorLogo.textContent = "";
+  teamErrorDescription.textContent = "";
+  teamErrorCreator.textContent = "";
+  teamErrorCurrentLeague.textContent = "";
 }
 
 function clearPlayerErrors() {
@@ -149,7 +159,11 @@ function loadStatsFormForPlayer(playerId) {
 
 function renderTeamsTable() {
   teamsTableBody.replaceChildren();
-  adminLeague.getTeams().forEach((t) => {
+  const teams = adminLeague.getTeams();
+  const triples = teams.map((t) => adminLeague.getTeamStatTotals(t.id));
+  const maxes = computeMaxTriples(triples);
+  teams.forEach((t, idx) => {
+    const tot = triples[idx];
     const tr = document.createElement("tr");
     tr.innerHTML =
       '<td><img class="table-logo" src="' +
@@ -157,6 +171,9 @@ function renderTeamsTable() {
       '" alt="" loading="lazy" /></td>' +
       "<td>" +
       escapeHtml(t.name) +
+      "</td>" +
+      '<td class="td-stat-viz">' +
+      statTripleBars(tot.goals, tot.assists, tot.yellowCards, maxes.maxG, maxes.maxA, maxes.maxY, { table: true }) +
       "</td>";
     const tdAct = document.createElement("td");
     tdAct.className = "num actions";
@@ -181,8 +198,19 @@ function renderTeamsTable() {
 
 function renderPlayersTable() {
   playersTableBody.replaceChildren();
-  adminLeague.data.players.forEach((p) => {
+  const players = adminLeague.data.players.slice();
+  const triples = players.map((p) => {
+    const s = adminLeague.getStats(p.id);
+    return {
+      goals: s ? s.goals : 0,
+      assists: s ? s.assists : 0,
+      yellowCards: s && s.yellowCards !== undefined ? s.yellowCards : 0,
+    };
+  });
+  const maxes = computeMaxTriples(triples);
+  players.forEach((p, idx) => {
     const team = adminLeague.getTeam(p.teamId);
+    const tot = triples[idx];
     const tr = document.createElement("tr");
     const photoTd =
       p.imageUrl && String(p.imageUrl).trim()
@@ -200,6 +228,9 @@ function renderPlayersTable() {
       "</td>" +
       "<td>" +
       escapeHtml(p.position) +
+      "</td>" +
+      '<td class="td-stat-viz">' +
+      statTripleBars(tot.goals, tot.assists, tot.yellowCards, maxes.maxG, maxes.maxA, maxes.maxY, { table: true }) +
       "</td>";
     const tdAct = document.createElement("td");
     tdAct.className = "num actions";
@@ -241,6 +272,10 @@ teamsTableBody.addEventListener("click", (e) => {
     teamEditId.value = t.id;
     teamName.value = t.name;
     teamLogoUrl.value = t.logoUrl;
+    teamDescription.value = t.description || "";
+    teamCurrentLeague.value = t.currentLeague || "";
+    teamCreator.value = t.creator || "";
+    teamLeaguesWon.value = Array.isArray(t.leaguesWon) ? t.leaguesWon.join("\n") : "";
     teamSubmitBtn.textContent = "Save team";
     teamCancelBtn.hidden = false;
     clearTeamErrors();
@@ -292,10 +327,20 @@ playersTableBody.addEventListener("click", (e) => {
 teamForm.addEventListener("submit", (e) => {
   e.preventDefault();
   clearTeamErrors();
-  const res = createTeamInputFromValues({ name: teamName.value, logoUrl: teamLogoUrl.value });
+  const res = createTeamInputFromValues({
+    name: teamName.value,
+    logoUrl: teamLogoUrl.value,
+    description: teamDescription.value,
+    currentLeague: teamCurrentLeague.value,
+    creator: teamCreator.value,
+    leaguesWon: teamLeaguesWon.value,
+  });
   if (!res.valid) {
     teamErrorName.textContent = res.errors.name || "";
     teamErrorLogo.textContent = res.errors.logoUrl || "";
+    teamErrorDescription.textContent = res.errors.description || "";
+    teamErrorCreator.textContent = res.errors.creator || "";
+    teamErrorCurrentLeague.textContent = res.errors.currentLeague || "";
     showGlobal("Fix team form errors.", true);
     return;
   }
@@ -306,8 +351,7 @@ teamForm.addEventListener("submit", (e) => {
   } else {
     adminLeague.addTeam({
       id: SoccerHubUtils.newId(),
-      name: res.data.name,
-      logoUrl: res.data.logoUrl,
+      ...res.data,
     });
     showGlobal("Team added.");
   }
@@ -419,7 +463,9 @@ function logoutToIndex() {
   window.location.href = "../index.html";
 }
 
-logoutButton.addEventListener("click", logoutToIndex);
+if (logoutButton) {
+  logoutButton.addEventListener("click", logoutToIndex);
+}
 
 const exportDataBtn = document.getElementById("exportDataBtn");
 const importDataInput = document.getElementById("importDataInput");

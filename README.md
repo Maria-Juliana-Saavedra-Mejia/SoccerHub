@@ -38,6 +38,8 @@ SoccerHub is a **frontend-only** web application built with HTML, CSS, and JavaS
 - **Cascade delete:** removing a team removes its players and their stats.
 - **Export / import:** download or load `soccerhub-data.json` for real file read/write from the browser.
 - **Quick menu (admin):** numbered, grouped tiles — **Go to section** (1–3), **Data on your computer** (4–5), **Session** (6).
+- **Stats display (user):** Team cards stay **minimal** (logo + name). After you open a squad, a **club profile** (description, current league, leagues/honors won, creator) appears first, then **Club totals** with summed **G / A / Y** metric cards and bars (Betplay-inspired dark sports styling). Player rows use **G / A / Y pills**; the modal keeps the full stat list plus a normalized bar strip. **Admin** tables still use compact bar columns; scales are **relative** within that table for fair comparison.
+- **Branding:** Page headers use the SoccerHub logo image at [`assets/soccerhub-logo.png`](assets/soccerhub-logo.png) (login, user, and admin).
 
 ---
 
@@ -55,6 +57,8 @@ SoccerHub is a **frontend-only** web application built with HTML, CSS, and JavaS
 ```text
 SoccerHub/
 ├── index.html                 # Login (role + conditional admin password)
+├── assets/
+│   └── soccerhub-logo.png     # Header brand mark (login, user, admin)
 ├── package.json               # npm test (validator unit tests)
 ├── README.md
 ├── tests/
@@ -69,6 +73,7 @@ SoccerHub/
 │   └── dashboard.css          # Dashboard, modal, admin quick menu, tables
 └── scripts/
     ├── core.js                # Config, seed data, AppDataRepository, LeagueService, AuthService
+    ├── stats-viz.js           # CSS mini-bar charts (G / A / Y) for admin + user UI
     ├── validators.js          # Team / player / stats form validation
     ├── login.js
     ├── admin.js
@@ -86,7 +91,7 @@ Core logic lives in [`scripts/core.js`](scripts/core.js).
 | `SoccerHubConfig` | Keys: `soccerHubData`, legacy `soccerHubPlayers`, `soccerHubSessionRole`, `adminPassword` |
 | `SoccerHubUtils` | `newId()` |
 | `AppDataRepository` | Load/save JSON `{ version, teams, players, stats }`; migrate legacy `soccerHubPlayers` if needed |
-| `LeagueService` | CRUD teams/players/stats; cascade delete; `importAppData()` for JSON import |
+| `LeagueService` | CRUD teams/players/stats; cascade delete; `getTeamStatTotals()`; `importAppData()` for JSON import |
 | `AuthService` | Login, logout, `requireRole()` |
 | `createTeamInputFromValues` | Team form validation ([`scripts/validators.js`](scripts/validators.js)) |
 | `createPlayerInputFromValues` | Player form validation ([`scripts/validators.js`](scripts/validators.js)) |
@@ -97,8 +102,18 @@ Core logic lives in [`scripts/core.js`](scripts/core.js).
 **Team**
 
 ```js
-{ id: string, name: string, logoUrl: string }
+{
+  id: string,
+  name: string,
+  logoUrl: string,
+  description?: string,
+  leaguesWon?: string[],
+  creator?: string,
+  currentLeague?: string
+}
 ```
+
+Admin can edit all fields; the **user squad** view shows a **club profile** block (description, current league, honors, creator) above club totals.
 
 **Player**
 
@@ -141,12 +156,12 @@ Default seed data uses **football-data.org** crests and mixed portrait URLs for 
 
 ### `html/user.html` — user view
 
-- Team cards, optional search, squad list, optional player search, stats modal (read-only).
+- **Teams** grid: logo + name only. **Squad** view: **Club totals** block (aggregated goals, assists, yellow cards) and Betplay-style visuals; optional search; player rows with **G / A / Y** pills; stats modal with normalized bars plus full numbers (read-only).
 
 ### `html/admin.html` — admin dashboard
 
 - **Quick menu** at the top: grouped, numbered tiles (navigate, export/import JSON, logout).
-- **Teams**, **Players**, and **Statistics** sections with forms and tables.
+- **Teams**, **Players**, and **Statistics** sections with forms and tables; **Teams** and **Players** tables include **Squad totals** and **Stats** columns with the same G / A / Y mini-bars as the user view.
 
 ### `html/login.html`
 
@@ -179,6 +194,7 @@ This section summarizes the **implementation order** and intent of the project (
 7. **Validators and tests** — Validation helpers moved to [`scripts/validators.js`](scripts/validators.js); [`tests/validation.test.mjs`](tests/validation.test.mjs) + [`npm test`](package.json) for automated checks.
 8. **File export/import** — Admin downloads `soccerhub-data.json` or picks a file to import; `LeagueService.importAppData()` validates shape and replaces data.
 9. **Quick menu** — Admin **Quick menu** panel: numbered tiles grouped into **Go to section**, **Data on your computer**, and **Session** ([`html/admin.html`](html/admin.html), [`styles/dashboard.css`](styles/dashboard.css)).
+10. **Stat visualization** — [`LeagueService.getTeamStatTotals()`](scripts/core.js) for squad sums; [`scripts/stats-viz.js`](scripts/stats-viz.js) (`teamSquadSummaryHtml`, `playerStatPillsHtml`, table/modal bars) + [`styles/dashboard.css`](styles/dashboard.css) with **Betplay-inspired** tokens (lime/gold/blue on dark). User: totals **only on squad screen**; admin: bar columns in tables.
 
 ---
 

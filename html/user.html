@@ -17,7 +17,16 @@
     <div class="page">
       <header class="header">
         <div class="header__brand">
-          <span class="header__logo">⚽</span>
+          <div class="header__logo-wrap" aria-hidden="true">
+            <img
+              class="header__logo-img"
+              src="../assets/soccerhub-logo.png"
+              alt=""
+              width="120"
+              height="120"
+              loading="lazy"
+            />
+          </div>
           <div>
             <h1 class="header__title">SoccerHub</h1>
             <p class="header__tagline">Browse teams and player stats</p>
@@ -33,7 +42,7 @@
 
         <nav id="userBreadcrumb" class="breadcrumb" aria-label="Breadcrumb"></nav>
 
-        <section id="teamsView" class="panel">
+        <section id="teamsView" class="panel panel--elevated panel--teams-showcase">
           <div class="panel__head">
             <h2 class="panel__title">Teams</h2>
           </div>
@@ -46,12 +55,14 @@
           <p id="teamsEmpty" class="empty" hidden>No teams match your search.</p>
         </section>
 
-        <section id="playersView" class="panel is-hidden">
+        <section id="playersView" class="panel panel--squad is-hidden">
           <div class="panel__head">
             <h2 class="panel__title" id="playersPanelTitle">Squad</h2>
             <button id="backToTeamsButton" type="button" class="btn btn--ghost">← All teams</button>
           </div>
-          <p class="section-note">Click a player to view statistics.</p>
+          <div id="teamClubProfile" class="club-profile" hidden aria-live="polite"></div>
+          <div id="teamSquadStats" class="team-squad-summary" hidden aria-live="polite"></div>
+          <p class="section-note">Club profile and totals above list this squad. Click a player for full statistics.</p>
           <label class="field field--inline-max">
             <span class="field__label">Search players</span>
             <input id="playerSearchInput" type="search" class="field__input" placeholder="Filter by name or position…" autocomplete="off" />
@@ -74,6 +85,7 @@
     </div>
 
     <script src="../scripts/core.js"></script>
+    <script src="../scripts/stats-viz.js"></script>
     <script src="../scripts/user.js"></script>
   </body>
 </html>
