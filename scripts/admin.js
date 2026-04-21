@@ -212,26 +212,33 @@ function renderPlayersTable() {
     const team = adminLeague.getTeam(p.teamId);
     const tot = triples[idx];
     const tr = document.createElement("tr");
-    const photoTd =
-      p.imageUrl && String(p.imageUrl).trim()
-        ? '<td><img class="table-logo" src="' +
-          escapeHtml(String(p.imageUrl)) +
-          '" alt="" loading="lazy" /></td>'
-        : '<td class="table-photo-empty">—</td>';
-    tr.innerHTML =
-      photoTd +
-      "<td>" +
-      escapeHtml(p.name) +
-      "</td>" +
-      "<td>" +
-      escapeHtml(team ? team.name : "—") +
-      "</td>" +
-      "<td>" +
-      escapeHtml(p.position) +
-      "</td>" +
-      '<td class="td-stat-viz">' +
-      statTripleBars(tot.goals, tot.assists, tot.yellowCards, maxes.maxG, maxes.maxA, maxes.maxY, { table: true }) +
-      "</td>";
+    const photoTd = document.createElement("td");
+    const imgUrl = p.imageUrl && String(p.imageUrl).trim();
+    if (imgUrl) {
+      const img = document.createElement("img");
+      img.className = "table-logo";
+      img.alt = "";
+      img.loading = "lazy";
+      img.src = imgUrl;
+      photoTd.appendChild(img);
+    } else {
+      photoTd.className = "table-photo-empty";
+      photoTd.textContent = "—";
+    }
+    tr.appendChild(photoTd);
+    const nameTd = document.createElement("td");
+    nameTd.textContent = p.name;
+    tr.appendChild(nameTd);
+    const teamTd = document.createElement("td");
+    teamTd.textContent = team ? team.name : "—";
+    tr.appendChild(teamTd);
+    const posTd = document.createElement("td");
+    posTd.textContent = p.position;
+    tr.appendChild(posTd);
+    const statTd = document.createElement("td");
+    statTd.className = "td-stat-viz";
+    statTd.innerHTML = statTripleBars(tot.goals, tot.assists, tot.yellowCards, maxes.maxG, maxes.maxA, maxes.maxY, { table: true });
+    tr.appendChild(statTd);
     const tdAct = document.createElement("td");
     tdAct.className = "num actions";
     const edit = document.createElement("button");

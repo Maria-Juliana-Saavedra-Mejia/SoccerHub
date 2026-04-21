@@ -38,8 +38,12 @@ function createPlayerInputFromValues(values) {
   if (!teamId) errors.teamId = "Select a team.";
   if (!name) errors.name = "Player name is required.";
   if (!position) errors.position = "Position is required.";
-  if (imageUrl && !/^https?:\/\//i.test(imageUrl)) {
-    errors.imageUrl = "Photo URL must start with http:// or https://";
+  if (
+    imageUrl &&
+    !/^https?:\/\//i.test(imageUrl) &&
+    !/^data:image\//i.test(imageUrl)
+  ) {
+    errors.imageUrl = "Photo must be an http(s) URL or a data:image/… URI.";
   }
   const data = { teamId, name, position };
   if (imageUrl) data.imageUrl = imageUrl;

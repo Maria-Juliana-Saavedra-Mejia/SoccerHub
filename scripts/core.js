@@ -20,6 +20,24 @@ class SoccerHubUtils {
     }
     return "id-" + Date.now() + "-" + Math.random().toString(36).slice(2, 9);
   }
+
+  /**
+   * Inline SVG avatar (initials) as a data URL — no network; avoids blocked CDNs / adblockers.
+   * @param {string} initials 1–3 Latin characters recommended
+   */
+  static initialsAvatarDataUrl(initials) {
+    const label = String(initials || "?")
+      .replace(/[<>&'"]/g, "")
+      .trim()
+      .slice(0, 3) || "?";
+    const svg =
+      '<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96">' +
+      '<rect fill="#111822" width="96" height="96" rx="10"/>' +
+      '<text x="48" y="58" fill="#c8f902" font-size="22" font-family="system-ui,sans-serif" font-weight="700" text-anchor="middle">' +
+      label +
+      "</text></svg>";
+    return "data:image/svg+xml," + encodeURIComponent(svg);
+  }
 }
 
 /**
@@ -237,82 +255,83 @@ class AppDataRepository {
       },
 
       // ================= BARCELONA =================
+      // Inline SVG initials (data URLs) — no HTTP fetch; works offline and when external CDNs are blocked.
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Marc-André ter Stegen",
         position: "Goalkeeper",
-        imageUrl: "https://img.uefa.com/imgml/TP/players/1/2026/cutoff/250007631.webp",
+        imageUrl: "https://a.espncdn.com/photo/2026/0106/r1597439_1296x729_16-9.jpg",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Jules Koundé",
         position: "Defender",
-        imageUrl: "https://img.uefa.com/imgml/TP/players/1/2026/cutoff/250096309.webp",
+        imageUrl: "https://barcauniversal.com/wp-content/uploads/2025/04/barcelona-v-real-madrid-copa-del-rey-final-1-scaled.jpg",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Ronald Araújo",
         position: "Defender",
-        imageUrl: "https://www.fcbarcelona.com/photo-resources/2025/09/09/072afc10-1ec9-483e-a4a5-8775cb6cea23/04-Araujo.png?width=670&height=790",
+        imageUrl: "https://www.fcbarcelona.com/photo-resources/2026/03/03/9676da2a-af41-4299-a3df-d19d92491ab5/JUCA9970.jpg?width=1200&height=750",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Alejandro Balde",
         position: "Left Back",
-        imageUrl: "https://www.fcbarcelona.com/photo-resources/2025/09/09/0d332686-2eee-4297-a099-bab75c7c35bb/03-Balde.png?width=670&height=790",
+        imageUrl: "https://library.sportingnews.com/styles/twitter_card_120x120/s3/2025-04/Alejandro%20Balde%20Barcelona%202025.jpg?itok=8XWLM1By",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Frenkie de Jong",
         position: "Midfielder",
-        imageUrl: "https://www.fcbarcelona.com/photo-resources/2025/09/09/b62d13a8-5712-4823-b627-18dcce921378/21-De_Jong.png?width=670&height=790",
+        imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRayb0kbH9xKR6r2efxImzYnE6bpQ5Fz3B0nQ&s",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Pedri",
         position: "Midfielder",
-        imageUrl: "https://www.fcbarcelona.com/photo-resources/2025/09/09/3dd2346c-01bb-4ad9-9b62-ed5cbf8d8b06/08-Pedri.png?width=670&height=790",
+        imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTezI4cQFqUTuhdaaDI29wR_mydugEZ39-XrA&s",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Gavi",
         position: "Midfielder",
-        imageUrl: "https://img.uefa.com/imgml/TP/players/1/2026/cutoff/250139255.webp",
+        imageUrl: "https://i.pinimg.com/736x/c1/72/0f/c1720f55d4553b8aadbb42fca8a215b9.jpg",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Raphinha",
         position: "Forward",
-        imageUrl: "https://www.fcbarcelona.com/photo-resources/2025/09/09/369f0d8e-3301-4f3d-9507-246371f8e3d2/11-Raphinha.png?width=670&height=790",
+        imageUrl: "",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Robert Lewandowski",
         position: "Striker",
-        imageUrl: "https://www.fcbarcelona.com/photo-resources/2025/09/09/3f98839a-bac3-451e-9431-6d58b79588d5/09-Lewandowski.png?width=670&height=790",
+        imageUrl: "https://i.pinimg.com/736x/b4/0e/9e/b40e9eadc4187bcdf22ac4461883548e.jpg",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "João Félix",
         position: "Forward",
-        imageUrl: "https://fcb-abj-pre.s3.amazonaws.com/img/jugadors/JOAO%20FELIX.jpg",
+        imageUrl: "https://assets.goal.com/images/v3/blte480a8f93fa2e2a9/GOAL_-_Blank_WEB_-_Facebook_(3).jpg?auto=webp&format=pjpg&width=3840&quality=60",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
         name: "Lamine Yamal",
         position: "Forward",
-        imageUrl: "https://assets.laliga.com/squad/2025/t178/p593109/2048x2225/p593109_t178_2025_1_001_000.png",
+        imageUrl: "https://assets-us-01.kc-usercontent.com/31dbcbc6-da4c-0033-328a-d7621d0fa726/5f67c61f-3ebb-4ddf-ba7c-72438b981969/2025-11-09T210026Z_700312376_UP1ELB91MCPGJ_RTRMADP_3_SOCCER-SPAIN-CEL-BAR%20%282%29.JPG?ver=03-06-2025?w=3840&q=75",
       },
 
       // ================= MAN CITY =================
@@ -960,7 +979,8 @@ class AppDataRepository {
         if (changed) teamsMerged = true;
         return merged;
       });
-      const players = d.players.map((p) => this.normalizePlayer(p)).filter(Boolean);
+      const normalizedPlayers = d.players.map((p) => this.normalizePlayer(p)).filter(Boolean);
+      const { players, changed: playersPhotoMerged } = mergeSeedPlayerPhotos(normalizedPlayers, teams);
       const stats = d.stats.map((s) => this.normalizeStats(s)).filter(Boolean);
       const result = {
         version: this.config.dataVersion,
@@ -968,7 +988,7 @@ class AppDataRepository {
         players: /** @type {Player[]} */ (players),
         stats: /** @type {PlayerStats[]} */ (stats),
       };
-      if (teamsMerged) this.save(result);
+      if (teamsMerged || playersPhotoMerged) this.save(result);
       return result;
     } catch {
       const fresh = this.getDefaultData();
@@ -1133,11 +1153,16 @@ class LeagueService {
     const teams = d.teams
       .map((t) => this.repository.normalizeTeam(t))
       .filter(Boolean);
+    const normalizedPlayers = d.players
+      .map((p) => this.repository.normalizePlayer(p))
+      .filter(Boolean);
+    const { players } = mergeSeedPlayerPhotos(normalizedPlayers, /** @type {Team[]} */ (teams));
+    const stats = d.stats.map((s) => this.repository.normalizeStats(s)).filter(Boolean);
     this.data = {
       version: typeof d.version === "number" ? d.version : this.repository.config.dataVersion,
       teams: /** @type {Team[]} */ (teams),
-      players: d.players,
-      stats: d.stats,
+      players: /** @type {Player[]} */ (players),
+      stats: /** @type {PlayerStats[]} */ (stats),
     };
     this.persist();
     return { ok: true };
@@ -1177,4 +1202,63 @@ class AuthService {
     }
     return true;
   }
+}
+
+/**
+ * Replace stored photo URLs that are empty or known-broken (e.g. old Transfermarkt hotlinks) with seed URLs.
+ * @param {string} url
+ */
+function shouldBackfillPlayerPhotoUrl(url) {
+  const u = String(url || "").trim();
+  if (!u) return true;
+  const low = u.toLowerCase();
+  return (
+    low.includes("tmssl.akamaized.net") ||
+    low.includes("transfermarkt") ||
+    low.includes("encrypted-tbn0.gstatic.com") ||
+    low.includes("img.uefa.com") ||
+    low.includes("fcbarcelona.com") ||
+    low.includes("fcb-abj-pre.s3.amazonaws.com") ||
+    low.includes("assets.laliga.com") ||
+    low.includes("placehold.co")
+  );
+}
+
+/** Built once from fresh seed data (single source of truth for default portraits). */
+const DEFAULT_PLAYER_PHOTO_BY_TEAM_AND_NAME = (function buildDefaultPlayerPhotoLookup() {
+  const repo = new AppDataRepository(SoccerHubConfig);
+  const data = repo.getDefaultData();
+  const teamById = new Map(data.teams.map((t) => [t.id, t.name]));
+  /** @type {Record<string, string>} */
+  const o = {};
+  for (const p of data.players) {
+    const tn = teamById.get(p.teamId);
+    if (!tn) continue;
+    const url = p.imageUrl && String(p.imageUrl).trim();
+    if (url) o[`${tn}|${p.name}`] = url;
+  }
+  return o;
+})();
+
+/**
+ * @param {Player[]} players
+ * @param {Team[]} teams
+ * @returns {{ players: Player[], changed: boolean }}
+ */
+function mergeSeedPlayerPhotos(players, teams) {
+  const teamById = new Map(teams.map((t) => [t.id, t.name]));
+  let changed = false;
+  const out = players.map((p) => {
+    const teamName = teamById.get(p.teamId);
+    if (!teamName) return p;
+    const key = `${teamName}|${p.name}`;
+    const seedUrl = DEFAULT_PLAYER_PHOTO_BY_TEAM_AND_NAME[key];
+    if (!seedUrl) return p;
+    const current = String(p.imageUrl || "").trim();
+    if (current === seedUrl) return p;
+    if (!shouldBackfillPlayerPhotoUrl(current)) return p;
+    changed = true;
+    return { ...p, imageUrl: seedUrl };
+  });
+  return { players: out, changed };
 }

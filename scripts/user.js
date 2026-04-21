@@ -155,21 +155,39 @@ function renderPlayers() {
     row.setAttribute("role", "listitem");
     row.dataset.playerId = p.id;
     const imgUrl = p.imageUrl && String(p.imageUrl).trim();
-    const avatar = imgUrl
-      ? '<span class="player-row__avatar"><img src="' +
-        escapeHtml(imgUrl) +
-        '" alt="" class="player-row__img" loading="lazy" /></span>'
-      : '<span class="player-row__avatar player-row__avatar--empty" aria-hidden="true"></span>';
-    row.innerHTML =
-      avatar +
-      '<span class="player-row__main"><span class="player-row__name">' +
+
+    const avatarSpan = document.createElement("span");
+    avatarSpan.className = "player-row__avatar";
+    if (imgUrl) {
+      const img = document.createElement("img");
+      img.src = imgUrl;
+      img.alt = "";
+      img.className = "player-row__img";
+      img.loading = "lazy";
+      img.referrerPolicy = "no-referrer";
+      avatarSpan.appendChild(img);
+    } else {
+      avatarSpan.classList.add("player-row__avatar--empty");
+      avatarSpan.setAttribute("aria-hidden", "true");
+    }
+
+    const main = document.createElement("span");
+    main.className = "player-row__main";
+    main.innerHTML =
+      '<span class="player-row__name">' +
       escapeHtml(p.name) +
       '</span><span class="player-row__pos">' +
       escapeHtml(p.position) +
       "</span>" +
-      playerStatPillsHtml(g, a, y) +
-      "</span>" +
-      '<span class="player-row__hint">View stats →</span>';
+      playerStatPillsHtml(g, a, y);
+
+    const hint = document.createElement("span");
+    hint.className = "player-row__hint";
+    hint.textContent = "View stats →";
+
+    row.appendChild(avatarSpan);
+    row.appendChild(main);
+    row.appendChild(hint);
     playersList.appendChild(row);
   });
   playersEmpty.hidden = players.length > 0;
@@ -216,14 +234,8 @@ function openStatsModal(playerId) {
   const a = st.assists;
   const y = st.yellowCards !== undefined ? st.yellowCards : 0;
   statsModalTitle.textContent = player.name;
-  const portrait =
-    player.imageUrl && String(player.imageUrl).trim()
-      ? '<div class="modal__portrait"><img src="' +
-        escapeHtml(String(player.imageUrl).trim()) +
-        '" alt="" loading="lazy" /></div>'
-      : "";
+  const portraitUrl = player.imageUrl && String(player.imageUrl).trim();
   statsModalBody.innerHTML =
-    portrait +
     '<p class="modal__meta">' +
     escapeHtml(team ? team.name : "") +
     " · " +
@@ -249,6 +261,17 @@ function openStatsModal(playerId) {
     (st.yellowCards ?? "—") +
     "</dd></div>" +
     "</dl>";
+  if (portraitUrl) {
+    const portrait = document.createElement("div");
+    portrait.className = "modal__portrait";
+    const img = document.createElement("img");
+    img.src = portraitUrl;
+    img.alt = "";
+    img.loading = "lazy";
+    img.referrerPolicy = "no-referrer";
+    portrait.appendChild(img);
+    statsModalBody.insertBefore(portrait, statsModalBody.firstChild);
+  }
   statsModal.hidden = false;
   document.body.classList.add("modal-open");
 }
