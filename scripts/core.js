@@ -255,7 +255,7 @@ class AppDataRepository {
       },
 
       // ================= BARCELONA =================
-      // Inline SVG initials (data URLs) — no HTTP fetch; works offline and when external CDNs are blocked.
+  
       {
         id: SoccerHubUtils.newId(),
         teamId: barca,
@@ -577,77 +577,77 @@ class AppDataRepository {
         teamId: bayern,
         name: "Manuel Neuer",
         position: "Goalkeeper",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/17259.jpg",
+        imageUrl: "https://img.fcbayern.com/image/upload/f_auto/q_auto/ar_1:1,c_fill,g_custom,w_768/v1719763484/cms/public/images/fcbayern-com/players/spielerportraits/ganzkoerper/manuel_neuer.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: bayern,
         name: "Joshua Kimmich",
         position: "Right Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/161933.jpg",
+        imageUrl: "https://img.fcbayern.com/image/upload/f_auto/q_auto/t_cms-6x9-seo/v1656614911/cms/public/images/fcbayern-com/players/spielerportraits/ganzkoerper/joshua_kimmich.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: bayern,
         name: "Dayot Upamecano",
         position: "Center Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/344695.jpg",
+        imageUrl: "https://img.fcbayern.com/image/upload/f_auto/q_auto/t_cms-1x1-seo/v1656614772/cms/public/images/fcbayern-com/players/spielerportraits/ganzkoerper/dayot_upamecano.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: bayern,
         name: "Kim Min-jae",
         position: "Center Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/351503.jpg",
+        imageUrl: "https://img.fcbayern.com/image/upload/f_auto/q_auto/t_cms-1x1-seo/v1689695039/cms/public/images/fcbayern-com/players/spielerportraits/teaser/minjae-kim.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: bayern,
         name: "Alphonso Davies",
         position: "Left Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/424204.jpg",
+        imageUrl: "https://img.fcbayern.com/image/upload/f_auto/q_auto/t_cms-1x1-seo/v1656615722/cms/public/images/fcbayern-com/players/spielerportraits/ganzkoerper/alphonso_davies.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: bayern,
         name: "Leon Goretzka",
         position: "Midfielder",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/153065.jpg",
+        imageUrl: "https://img.fcbayern.com/image/upload/f_auto/q_auto/t_cms-1x1-seo/v1757574726/cms/public/images/fcbayern-com/players/spielerportraits/ganzkoerper/leon_goretzka.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: bayern,
         name: "Jamal Musiala",
         position: "Midfielder",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/580014.jpg",
+        imageUrl: "https://img.fcbayern.com/image/upload/f_auto/q_auto/ar_1:1,c_fill,g_custom,w_768/v1627302821/cms/public/images/fcbayern-com/players/spielerportraits/ganzkoerper/jamal_musiala.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: bayern,
         name: "Leroy Sané",
         position: "Forward",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/192633.jpg",
+        imageUrl: "https://img.fcbayern.com/image/upload/f_auto/q_auto/t_cms-1x1-seo/v1656615390/cms/public/images/fcbayern-com/players/spielerportraits/ganzkoerper/leroy_sane.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: bayern,
         name: "Serge Gnabry",
         position: "Forward",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/90139.jpg",
+        imageUrl: "https://img.fcbayern.com/image/upload/f_auto/q_auto/t_cms-1x1-seo/v1656615030/cms/public/images/fcbayern-com/players/spielerportraits/ganzkoerper/serge_gnabry.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: bayern,
         name: "Harry Kane",
         position: "Striker",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/132098.jpg",
+        imageUrl: "https://img.fcbayern.com/image/upload/f_auto/q_auto/t_cms-1x1-seo/v1691827799/cms/public/images/fcbayern-com/players/spielerportraits/ganzkoerper/harry-kane.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: bayern,
         name: "Thomas Müller",
         position: "Forward",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/58333.jpg",
+        imageUrl: "https://img.fcbayern.com/image/upload/f_auto/q_auto/t_cms-1x1-seo/v1629460334/cms/public/images/fcbayern-com/players/spielerportraits/ganzkoerper/thomas_mueller.png",
       },
 
       // ================= ARSENAL =================
@@ -719,7 +719,7 @@ class AppDataRepository {
         teamId: arsenal,
         name: "Leandro Trossard",
         position: "Forward",
-        imageUrl: "https://static.wikia.nocookie.net/yokgammad/images/9/98/Trossard.webp/revision/latest?cb=20250715055457",
+        imageUrl: "https://www.getfootballnewsgermany.com/assets/arsenal-fc-v-newcastle-united-fc-premier-league-1-scaled.jpg",
       },
       {
         id: SoccerHubUtils.newId(),
@@ -735,77 +735,77 @@ class AppDataRepository {
         teamId: atletico,
         name: "Jan Oblak",
         position: "Goalkeeper",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/121483.jpg",
+        imageUrl: "https://img-estaticos.atleticodemadrid.com/system/fotos/16558/destacado_600x600/BUSTOS_WEB_900x900_0011_13_OBLAK.png?1723912761",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: atletico,
         name: "Nahuel Molina",
         position: "Right Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/593526.jpg",
+        imageUrl: "https://img-estaticos.atleticodemadrid.com/system/fotos/14846/destacado_600x600/_0009_RECORTES_WEB_0016_NAHUEL.png?1660405398",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: atletico,
         name: "José Giménez",
         position: "Center Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/284857.jpg",
+        imageUrl: "https://img.uefa.com/imgml/TP/players/1/2026/cutoff/250063505.webp",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: atletico,
         name: "Reinildo",
         position: "Left Back",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/341408.jpg",
+        imageUrl: "https://img-estaticos.atleticodemadrid.com/system/fotos/13021/destacado_600x600/23_REINILDO.png?1643737107",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: atletico,
         name: "Koke",
         position: "Midfielder",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/84423.jpg",
+        imageUrl: "https://img.uefa.com/imgml/TP/players/1/2026/cutoff/1909917.webp",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: atletico,
         name: "Rodrigo De Paul",
         position: "Midfielder",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/255253.jpg",
+        imageUrl: "https://img-estaticos.atleticodemadrid.com/system/fotos/16566/destacado_600x600/BUSTOS_WEB_900x900_0003_5_R-DE-PAUL.png?1723911355",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: atletico,
         name: "Antoine Griezmann",
         position: "Forward",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/125781.jpg",
+        imageUrl: "https://img.uefa.com/imgml/TP/players/1/2026/cutoff/250019498.webp",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: atletico,
         name: "Álvaro Morata",
         position: "Striker",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/128223.jpg",
+        imageUrl: "https://e0.365dm.com/19/07/1600x900/skysports-alvaro-morata-atletico-madrid_4711271.jpg?20190706131456",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: atletico,
         name: "Samuel Lino",
         position: "Forward",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/709051.jpg",
+        imageUrl: "https://cdn-img.zerozero.pt/img/planteis/new/87/91/8758791_samuel_lino_20250725195807.png",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: atletico,
         name: "Memphis Depay",
         position: "Forward",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/167688.jpg",
+        imageUrl: "https://okdiario.com/img/2023/03/11/memphis-en-el-entrenamiento-de-hoy.jpg",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: atletico,
         name: "Axel Witsel",
         position: "Midfielder",
-        imageUrl: "https://tmssl.akamaized.net/images/portrait/header/50664.jpg",
+        imageUrl: "https://img-estaticos.atleticodemadrid.com/system/fotos/15107/destacado_600x600/WITSEL_900x900.png?1692012680",
       },
     ];
 
@@ -980,15 +980,14 @@ class AppDataRepository {
         return merged;
       });
       const normalizedPlayers = d.players.map((p) => this.normalizePlayer(p)).filter(Boolean);
-      const { players, changed: playersPhotoMerged } = mergeSeedPlayerPhotos(normalizedPlayers, teams);
       const stats = d.stats.map((s) => this.normalizeStats(s)).filter(Boolean);
       const result = {
         version: this.config.dataVersion,
         teams: /** @type {Team[]} */ (teams),
-        players: /** @type {Player[]} */ (players),
+        players: /** @type {Player[]} */ (normalizedPlayers),
         stats: /** @type {PlayerStats[]} */ (stats),
       };
-      if (teamsMerged || playersPhotoMerged) this.save(result);
+      if (teamsMerged) this.save(result);
       return result;
     } catch {
       const fresh = this.getDefaultData();
@@ -1156,12 +1155,11 @@ class LeagueService {
     const normalizedPlayers = d.players
       .map((p) => this.repository.normalizePlayer(p))
       .filter(Boolean);
-    const { players } = mergeSeedPlayerPhotos(normalizedPlayers, /** @type {Team[]} */ (teams));
     const stats = d.stats.map((s) => this.repository.normalizeStats(s)).filter(Boolean);
     this.data = {
       version: typeof d.version === "number" ? d.version : this.repository.config.dataVersion,
       teams: /** @type {Team[]} */ (teams),
-      players: /** @type {Player[]} */ (players),
+      players: /** @type {Player[]} */ (normalizedPlayers),
       stats: /** @type {PlayerStats[]} */ (stats),
     };
     this.persist();
@@ -1202,63 +1200,4 @@ class AuthService {
     }
     return true;
   }
-}
-
-/**
- * Replace stored photo URLs that are empty or known-broken (e.g. old Transfermarkt hotlinks) with seed URLs.
- * @param {string} url
- */
-function shouldBackfillPlayerPhotoUrl(url) {
-  const u = String(url || "").trim();
-  if (!u) return true;
-  const low = u.toLowerCase();
-  return (
-    low.includes("tmssl.akamaized.net") ||
-    low.includes("transfermarkt") ||
-    low.includes("encrypted-tbn0.gstatic.com") ||
-    low.includes("img.uefa.com") ||
-    low.includes("fcbarcelona.com") ||
-    low.includes("fcb-abj-pre.s3.amazonaws.com") ||
-    low.includes("assets.laliga.com") ||
-    low.includes("placehold.co")
-  );
-}
-
-/** Built once from fresh seed data (single source of truth for default portraits). */
-const DEFAULT_PLAYER_PHOTO_BY_TEAM_AND_NAME = (function buildDefaultPlayerPhotoLookup() {
-  const repo = new AppDataRepository(SoccerHubConfig);
-  const data = repo.getDefaultData();
-  const teamById = new Map(data.teams.map((t) => [t.id, t.name]));
-  /** @type {Record<string, string>} */
-  const o = {};
-  for (const p of data.players) {
-    const tn = teamById.get(p.teamId);
-    if (!tn) continue;
-    const url = p.imageUrl && String(p.imageUrl).trim();
-    if (url) o[`${tn}|${p.name}`] = url;
-  }
-  return o;
-})();
-
-/**
- * @param {Player[]} players
- * @param {Team[]} teams
- * @returns {{ players: Player[], changed: boolean }}
- */
-function mergeSeedPlayerPhotos(players, teams) {
-  const teamById = new Map(teams.map((t) => [t.id, t.name]));
-  let changed = false;
-  const out = players.map((p) => {
-    const teamName = teamById.get(p.teamId);
-    if (!teamName) return p;
-    const key = `${teamName}|${p.name}`;
-    const seedUrl = DEFAULT_PLAYER_PHOTO_BY_TEAM_AND_NAME[key];
-    if (!seedUrl) return p;
-    const current = String(p.imageUrl || "").trim();
-    if (current === seedUrl) return p;
-    if (!shouldBackfillPlayerPhotoUrl(current)) return p;
-    changed = true;
-    return { ...p, imageUrl: seedUrl };
-  });
-  return { players: out, changed };
 }
