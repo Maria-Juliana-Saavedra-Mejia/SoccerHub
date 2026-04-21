@@ -1,0 +1,71 @@
+---
+description: Product requirements for SoccerHub — scope, roles, features, and constraints for contributors and AI assistants.
+alwaysApply: true
+---
+
+# SoccerHub — Product Requirements
+
+## Summary
+
+SoccerHub is a **frontend-only** web app for browsing and managing a fictional football league: **teams**, **players**, and **per-player statistics**. There is **no backend**; all data persists in the browser **`localStorage`**. The UI is split by **role**: a read-only **user** experience and a full **admin** CRUD dashboard with JSON **export/import**.
+
+## Goals
+
+- Let **users** discover teams, open squads, and inspect player stats in a modal (search where implemented).
+- Let **admins** maintain teams, players, and stats with **client-side validation** (e.g. goals cannot exceed matches played).
+- Provide **reliable local persistence** (single JSON document) and optional **backup/restore** via file export/import.
+- Keep the codebase **simple**: plain HTML/CSS/ES6+ JavaScript, **no frameworks**, OOP services in `scripts/core.js`.
+
+## Non-goals
+
+- No server, accounts database, or multi-user sync.
+- No real authentication beyond a **demo admin password** in config (`SoccerHubConfig.adminPassword` in `scripts/core.js`).
+- No guarantee that third-party image URLs in seed or user data always load (hotlinking/CORS/browser policy).
+
+## Personas and access
+
+| Role | Needs |
+|------|--------|
+| **User** | Browse team grid, open squad, see club profile/totals and player rows, open stats modal; session role `user`. |
+| **Admin** | CRUD teams/players/stats, cascade delete when removing a team, export/import JSON, quick menu shortcuts; session role `admin` after password. |
+
+Unauthenticated or wrong-role sessions **redirect** to login (`AuthService.requireRole`).
+
+## Functional requirements
+
+1. **Login** — Role selection; admin password field only when Admin is selected; session stored under the configured session key (e.g. `soccerHubSessionRole`).
+2. **User dashboard** — Teams view and squad view with stats visualization (pills, bars, modal) per README; read-only.
+3. **Admin dashboard** — Forms and tables for teams, players, statistics; validation via `scripts/validators.js`.
+4. **Data** — Versioned app payload: `{ version, teams, players, stats }` under the app data key; migrate from legacy storage if needed (`AppDataRepository`).
+5. **Import/export** — Admin can download and upload JSON; import **replaces** current data after shape validation (`LeagueService.importAppData`).
+6. **Seed** — `getDefaultData()` supplies default clubs/squads/stats when no valid stored data exists; resetting seed is done by clearing `localStorage` (see README).
+
+## Data rules (high level)
+
+- **Team:** `id`, `name`, `logoUrl`, optional rich club fields (`description`, `leaguesWon`, `creator`, `currentLeague`).
+- **Player:** `id`, `teamId`, `name`, `position`, optional `imageUrl` (http(s) and `data:image/…` where validation allows).
+- **Stats:** `playerId`, numeric counters including optional `shots`, `yellowCards`.
+
+Avoid undocumented automatic overwriting of user-edited records from seed on load; persistence behavior should live in clear repository/service code.
+
+## Technical constraints
+
+- **Stack:** HTML5, CSS (`styles/`), vanilla JS (`scripts/`).
+- **Tests:** `npm test` runs Node tests for validators (`tests/validation.test.mjs`) only; core app is manual/browser-tested.
+- **Assets:** Branding logo `assets/soccerhub-logo.png`; remote images work more reliably with a **local static server** than raw `file://`.
+
+## UX and quality bar
+
+- Dashboard styling: dark sports-inspired tokens, consistent G/A/Y visualization (`stats-viz.js`, `dashboard.css`).
+- Admin **quick menu**: numbered groups for navigation, data on disk, session.
+- **Accessibility:** Preserve semantic structure and roles when extending UI.
+
+## Success criteria
+
+- User can complete browse → squad → modal flow without errors for seeded data.
+- Admin can add/edit/delete entities and export/import without corrupting `localStorage`.
+- Validators enforce stated rules; `npm test` passes when changing validation.
+
+## Reference
+
+Authoritative detail lives in [`README.md`](README.md) (structure, keys, run instructions, test matrix).
