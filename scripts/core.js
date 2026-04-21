@@ -310,7 +310,7 @@ class AppDataRepository {
         teamId: barca,
         name: "Raphinha",
         position: "Forward",
-        imageUrl: "",
+        imageUrl: "https://www.aljazeera.com/wp-content/uploads/2025/01/2025-01-21T220448Z_1474946714_UP1EL1L1PBY5X_RTRMADP_3_SOCCER-CHAMPIONS-SLB-BAR-REPORT-1737497355.jpg?resize=1920%2C1440",
       },
       {
         id: SoccerHubUtils.newId(),
@@ -440,7 +440,7 @@ class AppDataRepository {
         teamId: liverpool,
         name: "Andrew Robertson",
         position: "Left Back",
-        imageUrl: "",
+        imageUrl: "https://backend.liverpoolfc.com/sites/default/files/styles/xs/public/2025-08/andy-robertson-2526-bodyshot_68e21fb11193f4265b68fac61056aa21.webp?itok=X3U46YL8",
       },
       {
         id: SoccerHubUtils.newId(),
@@ -712,14 +712,14 @@ class AppDataRepository {
         teamId: arsenal,
         name: "Kai Havertz",
         position: "Midfielder",
-        imageUrl: "",
+        imageUrl: "https://img.uefa.com/imgml/TP/players/1/2026/cutoff/250087938.webp",
       },
       {
         id: SoccerHubUtils.newId(),
         teamId: arsenal,
         name: "Leandro Trossard",
         position: "Forward",
-        imageUrl: "",
+        imageUrl: "https://static.wikia.nocookie.net/yokgammad/images/9/98/Trossard.webp/revision/latest?cb=20250715055457",
       },
       {
         id: SoccerHubUtils.newId(),
